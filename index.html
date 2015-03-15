@@ -44,7 +44,7 @@
     </div>
     <div class='col-md-8'>
       <div class="bs-docs-example">
-        <div id='chartfa027135460' class='rChart '>
+        <div id='chartfa014fce70' class='rChart '>
           <svg></svg>
         </div>
         
@@ -55,15 +55,15 @@
 <script type="text/javascript">
 function DemoCtrl($scope){
   $scope.opts = {
- "dom": "chartfa027135460",
+ "dom": "chartfa014fce70",
 "width":    700,
 "height":    400,
 "x": "year",
 "y": "sum",
 "group": "sex_event",
 "type": "lineChart",
-"id": "chartfa027135460",
-"disabled": [ true, true, true, true, true, true ] 
+"disabled": [ true, true, true, true, true, true ],
+"id": "chartfa014fce70" 
 }
   $scope.data = [
  {
@@ -16099,108 +16099,28 @@ function DemoCtrl($scope){
   $scope.controls = [] 
   $scope.filters = [
  {
- "variable": "Site",
-"value": "Brain and Other Nervous System" 
+ "variable": "sex_event",
+"value": "Male and Female Incidence" 
 },
 {
- "variable": "Site",
-"value": "Cervix" 
+ "variable": "sex_event",
+"value": "Male Incidence" 
 },
 {
- "variable": "Site",
-"value": "Colon and Rectum" 
+ "variable": "sex_event",
+"value": "Female Incidence" 
 },
 {
- "variable": "Site",
-"value": "Corpus and Uterus, NOS" 
+ "variable": "sex_event",
+"value": "Male and Female Mortality" 
 },
 {
- "variable": "Site",
-"value": "Esophagus" 
+ "variable": "sex_event",
+"value": "Male Mortality" 
 },
 {
- "variable": "Site",
-"value": "Female Breast" 
-},
-{
- "variable": "Site",
-"value": "Female Breast, In Situ" 
-},
-{
- "variable": "Site",
-"value": "Hodgkin Lymphoma" 
-},
-{
- "variable": "Site",
-"value": "Kaposi Sarcoma" 
-},
-{
- "variable": "Site",
-"value": "Kidney and Renal Pelvis" 
-},
-{
- "variable": "Site",
-"value": "Larynx" 
-},
-{
- "variable": "Site",
-"value": "Leukemias" 
-},
-{
- "variable": "Site",
-"value": "Liver and Intrahepatic Bile Duct" 
-},
-{
- "variable": "Site",
-"value": "Lung and Bronchus" 
-},
-{
- "variable": "Site",
-"value": "Melanomas of the Skin" 
-},
-{
- "variable": "Site",
-"value": "Mesothelioma" 
-},
-{
- "variable": "Site",
-"value": "Myeloma" 
-},
-{
- "variable": "Site",
-"value": "Non-Hodgkin Lymphoma" 
-},
-{
- "variable": "Site",
-"value": "Oral Cavity and Pharynx" 
-},
-{
- "variable": "Site",
-"value": "Ovary" 
-},
-{
- "variable": "Site",
-"value": "Pancreas" 
-},
-{
- "variable": "Site",
-"value": "Prostate" 
-},
-{
- "variable": "Site",
-"value": "Stomach" 
-},
-{
- "variable": "Site",
-"value": "Testis" 
-},
-{
- "variable": "Site",
-"value": "Thyroid" 
-},
-{
- "variable": "Site",
-"value": "Urinary Bladder" 
+ "variable": "sex_event",
+"value": "Female Mortality" 
 } 
 ]
   
@@ -16249,7 +16169,7 @@ function drawChart(opts, data){
 	chart
   .tooltipContent( function(key, x, y){
         return '<h3>' + key + '</h3>' + 
-        '<p>' + y + ' hundred thousand people diagnosed in ' + x + '</p>'
+        '<p>' + y + ' people diagnosed in ' + x + '</p>'
         } )
           
 	chart.xAxis
@@ -16258,8 +16178,8 @@ function drawChart(opts, data){
 	
 	
 	chart.yAxis
-  .axisLabel("Count (In Hundred Thousands)")
-  .width(    63)
+  .axisLabel("Count")
+  .width(    65)
 
 	d3.select("#" + opts.id + ' svg')
   // .empty()
@@ -16278,8 +16198,7 @@ function drawChart(opts, data){
 
 
 <!doctype html>
-=======
->>>>>>> origin/master
+
 <html>
   <head>
     
