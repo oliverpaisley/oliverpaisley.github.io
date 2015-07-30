@@ -1,2 +1,3 @@
 name: Oliver Paisley
-markdown: RMarkdown
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
