@@ -20,8 +20,8 @@ categories: jekyll pixyll
     &lt;style&gt;
     .rChart {
       display: block;
-      margin-left: auto; 
-      margin-right: auto;
+      margin-left: 5%; 
+      margin-right: %;
       width: 100%;
       height: 100%;
     }  
@@ -38,8 +38,6 @@ categories: jekyll pixyll
     function drawchart193c47207c88(){  
       var opts = {
  &quot;dom&quot;: &quot;chart193c47207c88&quot;,
-&quot;width&quot;:    100%,
-&quot;height&quot;:    100%,
 &quot;x&quot;: &quot;year&quot;,
 &quot;y&quot;: &quot;norm_count&quot;,
 &quot;group&quot;: &quot;sex&quot;,
