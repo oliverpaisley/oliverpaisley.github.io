@@ -19,7 +19,7 @@ html, body {
 }
 
 img {
-  width: auto;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -27,8 +27,4 @@ body {
           box-sizing: border-box;
      -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-}
-
-svg {
-  width: 1200px;
 }
