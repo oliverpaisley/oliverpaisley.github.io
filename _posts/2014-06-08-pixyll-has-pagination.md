@@ -1,3 +1,10 @@
+---
+layout:     post
+title:      How has Cancer in the United States Changed from 1999 to 2011?
+date:       2014-06-08 11:21:29
+summary:    This is an empty post to illustrate the pagination component with Pixyll.
+categories: jekyll pixyll
+---
 <link rel='stylesheet' href=http://nvd3.org/assets/css/nv.d3.css>
 <script type='text/javascript' src=http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js></script>
 <script type='text/javascript' src=http://d3js.org/d3.v3.min.js></script>
