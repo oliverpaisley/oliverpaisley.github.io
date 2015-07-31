@@ -22,8 +22,8 @@ categories: jekyll pixyll
       display: block;
       margin-left: auto; 
       margin-right: auto;
-      width: 100%;
-      height: auto;
+      width: 125%;
+      height: 125%;
     }  
     </style>
     
