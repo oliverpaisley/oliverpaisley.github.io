@@ -1,12 +1,12 @@
 ---
 layout:     post
 title:      How has Cancer in the United States Changed from 1999 to 2011?
-date:       2014-06-08 11:21:29
-summary:    This is an empty post to illustrate the pagination component with Pixyll.
+date:       2015-07-31
+summary:    A look at cancer in the United States from 1999 to 2011.
 categories: jekyll pixyll
 ---
 
-<meta charset = 'utf-8'>
+This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. 
 
 <html>
   <head>
