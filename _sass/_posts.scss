@@ -12,7 +12,6 @@
 .posts .post:last-child {
   border-bottom: none;
   margin-bottom: 0;
-  margin-top: 0;
   padding-bottom: 0;
 }
 
@@ -25,7 +24,7 @@
 .post-footer {
   @extend .italic;
 
-  margin-top: .75rem;
+  margin-top: 0;
   text-align: center;
 }
 
@@ -37,10 +36,10 @@
 
 .meta,
 .post-meta {
-  width: auto;
+  width: 100%;
   font-weight: 300;
   margin: 0;
-  padding: .25em 0;
+  padding: 0 0;
   color: #7a7a7a;
   font-style: italic;
 }
