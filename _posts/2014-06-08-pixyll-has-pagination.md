@@ -23,7 +23,7 @@ categories: jekyll pixyll
       margin-left: -25%; 
       margin-right: 0px;
       width: 100%;
-      height: 300px;
+      height: 50%;
     }  
     </style>
     
