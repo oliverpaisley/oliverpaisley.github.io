@@ -20,7 +20,7 @@ categories: jekyll pixyll
     <style>
     .rChart {
       display: block;
-      margin-left: -500px; 
+      margin-left: -100%; 
       margin-right: auto;
       width: 100%;
       height: 100%;
