@@ -4,8 +4,8 @@
 }
 
 .posts .post {
-  width: 100%;
   margin: 0;
+  margin-bottom: 0;
   border-bottom: thin solid #f3f3f3;
 }
 
@@ -39,7 +39,7 @@
   width: auto;
   font-weight: 300;
   margin: 0;
-  padding: 0 0;
+  padding: .25em 0;
   color: #7a7a7a;
   font-style: italic;
 }
