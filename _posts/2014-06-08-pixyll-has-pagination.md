@@ -21,7 +21,7 @@ categories: jekyll pixyll
     .rChart {
       display: block;
       margin-left: -50%; 
-      margin-right: auto;
+      margin-right: -50%;
       width: 150%;
       height: 200%;
     }  
