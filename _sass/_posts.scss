@@ -4,7 +4,8 @@
 }
 
 .posts .post {
-  margin-bottom: 0.75em;
+  margin: 0;
+  margin-bottom: 0;
   border-bottom: thin solid #f3f3f3;
 }
 
@@ -45,8 +46,4 @@
 
 .related-post-title {
   border-bottom: thin solid #f3f3f3;
-}
-
-svg {
-  width: 1200px;
 }
