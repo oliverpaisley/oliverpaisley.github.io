@@ -4,7 +4,6 @@
 }
 
 .posts .post {
-  align: left;
   margin: 0;
   margin-bottom: 0;
   border-bottom: thin solid #f3f3f3;
@@ -37,7 +36,7 @@
 
 .meta,
 .post-meta {
-  width: auto;
+  width: 100%;
   font-weight: 300;
   margin: 0;
   padding: .25em 0;
