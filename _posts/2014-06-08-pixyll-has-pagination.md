@@ -5,8 +5,11 @@ date:       2015-07-31
 summary:    A look at cancer in the United States from 1999 to 2011.
 categories: jekyll pixyll
 ---
+<meta charset = 'utf-8'>
 
-This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. 
+This is a test test test This is a test This is a test This is a test This is a test This is a test This is a test This is a test This is a test This is a test This is a test 
+
+<meta charset = 'utf-8'>
 
 <html>
   <head>
