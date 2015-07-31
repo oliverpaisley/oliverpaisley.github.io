@@ -1,251 +1,236 @@
----
-layout:     post
-title:      How has Cancer in the United States Changed from 1999 to 2011?
-date:       2014-06-08 11:21:29
-summary:    This is an empty post to illustrate the pagination component with Pixyll.
-categories: jekyll pixyll
----
-<iframe srcdoc=' &lt;!doctype HTML&gt;
-&lt;meta charset = &#039;utf-8&#039;&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#039;stylesheet&#039; href=&#039;http://nvd3.org/assets/css/nv.d3.css&#039;&gt;
-    
-    &lt;script src=&#039;http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js&#039; type=&#039;text/javascript&#039;&gt;&lt;/script&gt;
-    &lt;script src=&#039;http://d3js.org/d3.v3.min.js&#039; type=&#039;text/javascript&#039;&gt;&lt;/script&gt;
-    &lt;script src=&#039;http://timelyportfolio.github.io/rCharts_nvd3_tests/libraries/widgets/nvd3/js/nv.d3.min-new.js&#039; type=&#039;text/javascript&#039;&gt;&lt;/script&gt;
-    &lt;script src=&#039;http://nvd3.org/assets/lib/fisheye.js&#039; type=&#039;text/javascript&#039;&gt;&lt;/script&gt;
-    
-    &lt;style&gt;
-    .rChart {
-      display: block;
-      margin-left: auto; 
-      margin-right: auto;
-      width: 1200px;
-      height: 3000px;
-    }  
-    &lt;/style&gt;
-    
-  &lt;/head&gt;
-  &lt;body &gt;
-    
-    &lt;div id = &#039;chart193c47207c88&#039; class = &#039;rChart nvd3&#039;&gt;&lt;/div&gt;    
-    &lt;script type=&#039;text/javascript&#039;&gt;
+<link rel='stylesheet' href=http://nvd3.org/assets/css/nv.d3.css>
+<script type='text/javascript' src=http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js></script>
+<script type='text/javascript' src=http://d3js.org/d3.v3.min.js></script>
+<script type='text/javascript' src=http://timelyportfolio.github.io/rCharts_nvd3_tests/libraries/widgets/nvd3/js/nv.d3.min-new.js></script>
+<script type='text/javascript' src=http://nvd3.org/assets/lib/fisheye.js></script> 
+ <style>
+  .rChart {
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 800px;
+    height: 400px;
+  }  
+  </style>
+<div id = 'chart193c47207c88' class = 'rChart nvd3'></div>
+<script type='text/javascript'>
  $(document).ready(function(){
       drawchart193c47207c88()
     });
     function drawchart193c47207c88(){  
       var opts = {
- &quot;dom&quot;: &quot;chart193c47207c88&quot;,
-&quot;x&quot;: &quot;year&quot;,
-&quot;y&quot;: &quot;norm_count&quot;,
-&quot;group&quot;: &quot;sex&quot;,
-&quot;type&quot;: &quot;lineChart&quot;,
-&quot;disabled&quot;: [ false, false, true ],
-&quot;id&quot;: &quot;chart193c47207c88&quot; 
+ "dom": "chart193c47207c88",
+"width":    800,
+"height":    400,
+"x": "year",
+"y": "norm_count",
+"group": "sex",
+"type": "lineChart",
+"disabled": [ false, false, true ],
+"id": "chart193c47207c88" 
 },
         data = [
  {
- &quot;year&quot;: &quot;1999&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          5.876 
+ "year": "1999",
+"sex": "Female",
+"norm_count":          5.876 
 },
 {
- &quot;year&quot;: &quot;2000&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:           6.09 
+ "year": "2000",
+"sex": "Female",
+"norm_count":           6.09 
 },
 {
- &quot;year&quot;: &quot;2001&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          6.201 
+ "year": "2001",
+"sex": "Female",
+"norm_count":          6.201 
 },
 {
- &quot;year&quot;: &quot;2002&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          6.316 
+ "year": "2002",
+"sex": "Female",
+"norm_count":          6.316 
 },
 {
- &quot;year&quot;: &quot;2003&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          6.609 
+ "year": "2003",
+"sex": "Female",
+"norm_count":          6.609 
 },
 {
- &quot;year&quot;: &quot;2004&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          6.841 
+ "year": "2004",
+"sex": "Female",
+"norm_count":          6.841 
 },
 {
- &quot;year&quot;: &quot;2005&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          6.981 
+ "year": "2005",
+"sex": "Female",
+"norm_count":          6.981 
 },
 {
- &quot;year&quot;: &quot;2006&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          7.092 
+ "year": "2006",
+"sex": "Female",
+"norm_count":          7.092 
 },
 {
- &quot;year&quot;: &quot;2007&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          7.242 
+ "year": "2007",
+"sex": "Female",
+"norm_count":          7.242 
 },
 {
- &quot;year&quot;: &quot;2008&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          7.405 
+ "year": "2008",
+"sex": "Female",
+"norm_count":          7.405 
 },
 {
- &quot;year&quot;: &quot;2009&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          7.518 
+ "year": "2009",
+"sex": "Female",
+"norm_count":          7.518 
 },
 {
- &quot;year&quot;: &quot;2010&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:          7.456 
+ "year": "2010",
+"sex": "Female",
+"norm_count":          7.456 
 },
 {
- &quot;year&quot;: &quot;2011&quot;,
-&quot;sex&quot;: &quot;Female&quot;,
-&quot;norm_count&quot;:           7.46 
+ "year": "2011",
+"sex": "Female",
+"norm_count":           7.46 
 },
 {
- &quot;year&quot;: &quot;1999&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          6.238 
+ "year": "1999",
+"sex": "Male",
+"norm_count":          6.238 
 },
 {
- &quot;year&quot;: &quot;2000&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          6.534 
+ "year": "2000",
+"sex": "Male",
+"norm_count":          6.534 
 },
 {
- &quot;year&quot;: &quot;2001&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          6.683 
+ "year": "2001",
+"sex": "Male",
+"norm_count":          6.683 
 },
 {
- &quot;year&quot;: &quot;2002&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          6.855 
+ "year": "2002",
+"sex": "Male",
+"norm_count":          6.855 
 },
 {
- &quot;year&quot;: &quot;2003&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          7.138 
+ "year": "2003",
+"sex": "Male",
+"norm_count":          7.138 
 },
 {
- &quot;year&quot;: &quot;2004&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:           7.38 
+ "year": "2004",
+"sex": "Male",
+"norm_count":           7.38 
 },
 {
- &quot;year&quot;: &quot;2005&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          7.496 
+ "year": "2005",
+"sex": "Male",
+"norm_count":          7.496 
 },
 {
- &quot;year&quot;: &quot;2006&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          7.726 
+ "year": "2006",
+"sex": "Male",
+"norm_count":          7.726 
 },
 {
- &quot;year&quot;: &quot;2007&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          7.997 
+ "year": "2007",
+"sex": "Male",
+"norm_count":          7.997 
 },
 {
- &quot;year&quot;: &quot;2008&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          8.002 
+ "year": "2008",
+"sex": "Male",
+"norm_count":          8.002 
 },
 {
- &quot;year&quot;: &quot;2009&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          8.001 
+ "year": "2009",
+"sex": "Male",
+"norm_count":          8.001 
 },
 {
- &quot;year&quot;: &quot;2010&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:           7.89 
+ "year": "2010",
+"sex": "Male",
+"norm_count":           7.89 
 },
 {
- &quot;year&quot;: &quot;2011&quot;,
-&quot;sex&quot;: &quot;Male&quot;,
-&quot;norm_count&quot;:          7.861 
+ "year": "2011",
+"sex": "Male",
+"norm_count":          7.861 
 },
 {
- &quot;year&quot;: &quot;1999&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         12.114 
+ "year": "1999",
+"sex": "Male and Female",
+"norm_count":         12.114 
 },
 {
- &quot;year&quot;: &quot;2000&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         12.624 
+ "year": "2000",
+"sex": "Male and Female",
+"norm_count":         12.624 
 },
 {
- &quot;year&quot;: &quot;2001&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         12.884 
+ "year": "2001",
+"sex": "Male and Female",
+"norm_count":         12.884 
 },
 {
- &quot;year&quot;: &quot;2002&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         13.171 
+ "year": "2002",
+"sex": "Male and Female",
+"norm_count":         13.171 
 },
 {
- &quot;year&quot;: &quot;2003&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         13.747 
+ "year": "2003",
+"sex": "Male and Female",
+"norm_count":         13.747 
 },
 {
- &quot;year&quot;: &quot;2004&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         14.221 
+ "year": "2004",
+"sex": "Male and Female",
+"norm_count":         14.221 
 },
 {
- &quot;year&quot;: &quot;2005&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         14.477 
+ "year": "2005",
+"sex": "Male and Female",
+"norm_count":         14.477 
 },
 {
- &quot;year&quot;: &quot;2006&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         14.819 
+ "year": "2006",
+"sex": "Male and Female",
+"norm_count":         14.819 
 },
 {
- &quot;year&quot;: &quot;2007&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:          15.24 
+ "year": "2007",
+"sex": "Male and Female",
+"norm_count":          15.24 
 },
 {
- &quot;year&quot;: &quot;2008&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         15.407 
+ "year": "2008",
+"sex": "Male and Female",
+"norm_count":         15.407 
 },
 {
- &quot;year&quot;: &quot;2009&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         15.519 
+ "year": "2009",
+"sex": "Male and Female",
+"norm_count":         15.519 
 },
 {
- &quot;year&quot;: &quot;2010&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         15.347 
+ "year": "2010",
+"sex": "Male and Female",
+"norm_count":         15.347 
 },
 {
- &quot;year&quot;: &quot;2011&quot;,
-&quot;sex&quot;: &quot;Male and Female&quot;,
-&quot;norm_count&quot;:         15.321 
+ "year": "2011",
+"sex": "Male and Female",
+"norm_count":         15.321 
 } 
 ]
   
-      if(!(opts.type===&quot;pieChart&quot; || opts.type===&quot;sparklinePlus&quot; || opts.type===&quot;bulletChart&quot;)) {
+      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
         var data = d3.nest()
           .key(function(d){
-            //return opts.group === undefined ? &#039;main&#039; : d[opts.group]
+            //return opts.group === undefined ? 'main' : d[opts.group]
             //instead of main would think a better default is opts.x
             return opts.group === undefined ? opts.y : d[opts.group];
           })
@@ -263,7 +248,7 @@ categories: jekyll pixyll
           .width(opts.width)
           .height(opts.height)
           
-        if (opts.type != &quot;bulletChart&quot;){
+        if (opts.type != "bulletChart"){
           chart
             .x(function(d) { return d[opts.x] })
             .y(function(d) { return d[opts.y] })
@@ -271,10 +256,10 @@ categories: jekyll pixyll
           
          
         chart
-  .color([ &quot;hotpink&quot;, &quot;blue&quot;, &quot;black&quot; ])
+  .color([ "hotpink", "blue", "black" ])
   .tooltipContent( function(key, x, y){
-        return &#039;&lt;h3&gt;&#039; + key + &#039;&lt;/h3&gt;&#039; + 
-              &#039;&lt;p&gt;&#039; + y + &#039; per 100,000 diagnosed in &#039; + x + &#039;&lt;/p&gt;&#039;
+        return '<h3>' + key + '</h3>' + 
+              '<p>' + y + ' per 100,000 diagnosed in ' + x + '</p>'
               } )
           
         chart.xAxis
@@ -284,11 +269,11 @@ categories: jekyll pixyll
         
         chart.yAxis
   .showMaxMin(false)
-  .axisLabel(&quot;Count (per 100,000)&quot;)
+  .axisLabel("Count (per 100,000)")
   .width(    40)
       
-       d3.select(&quot;#&quot; + opts.id)
-        .append(&#039;svg&#039;)
+       d3.select("#" + opts.id)
+        .append('svg')
         .datum(data)
         .transition().duration(500)
         .call(chart);
@@ -297,9 +282,4 @@ categories: jekyll pixyll
        return chart;
       });
     };
-&lt;/script&gt;
-    
-    &lt;script&gt;&lt;/script&gt;    
-  &lt;/body&gt;
-&lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  nvd3  ' id='iframe-chart193c47207c88'> </iframe>
- <style>iframe.rChart{ width: 1200px; height: 1200px;}</style>
+</script>
