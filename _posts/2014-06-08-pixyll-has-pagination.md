@@ -6,8 +6,6 @@ summary:    This is an empty post to illustrate the pagination component with Pi
 categories: jekyll pixyll
 ---
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
 
 <meta charset="utf-8">
@@ -26,8 +24,8 @@ categories: jekyll pixyll
 <style type="text/css">
 .main-container {
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 code {
   color: inherit;
@@ -35,7 +33,7 @@ code {
 }
 img { 
   max-width:100%; 
-  height: auto; 
+  height: 100%; 
 }
 </style>
 <div class="container-fluid main-container">
@@ -338,7 +336,7 @@ img {
     display: block;
     margin-left: auto; 
     margin-right: auto;
-    width: 800px;
+    width: 100%;
     height: 400px;
   }  
   </style>
@@ -820,7 +818,7 @@ img {
     display: block;
     margin-left: auto; 
     margin-right: auto;
-    width: 800px;
+    width: 100%;
     height: 400px;
   }  
   </style>
