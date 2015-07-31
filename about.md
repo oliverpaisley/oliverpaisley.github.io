@@ -6,6 +6,4 @@ permalink: /about/
 
 Observable Data is a website dedicated to data visualizations. 
 
-Created by Oliver Paisley.
-
-[Twitter](http://twitter.com/oliverjdpaisley)
+Created by [Oliver Paisley](http://twitter.com/oliverjdpaisley).
