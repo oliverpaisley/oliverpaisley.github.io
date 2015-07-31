@@ -20,7 +20,7 @@ categories: jekyll pixyll
     <style>
     .rChart {
       display: block;
-      margin-left: 0px; 
+      margin-left: auto; 
       margin-right: auto;
       width: 1200px;
       height: 1200px;
@@ -305,3 +305,7 @@ categories: jekyll pixyll
     <script></script>    
   </body>
 </html>
+
+
+test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test 
+test test test
