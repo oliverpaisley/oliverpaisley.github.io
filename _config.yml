@@ -4,7 +4,7 @@ email:       oliverjdpaisley@gmail.com
 author:      Oliver Paisley
 description: "A website dedicated to data visualizations."
 baseurl:     "oliverpaisley.github.io"
-url:         ""
+url:         "oliverpaisley.github.io"
 
 # Google analytics
 google_analytics:
