@@ -3,7 +3,6 @@ layout:     post
 title:      How has Cancer in the United States Changed from 1999 to 2011?
 date:       2015-07-31
 summary:    A look at cancer in the United States from 1999 to 2011.
-categories: blog
 ---
 <meta charset = 'utf-8'>
 
