@@ -5,13 +5,12 @@
 
 .posts .post {
   margin-bottom: none;
-  margin-right: none;
   border-bottom: thin solid #f3f3f3;
 }
 
 .posts .post:last-child {
   border-bottom: none;
-  margin-bottom: none;
+  margin-bottom: .375em;
   padding-bottom: 0;
 }
 
@@ -30,8 +29,8 @@
 
 .post-footer .avatar {
   margin: 2rem 0;
-  width: 100%;
-  border-radius: 100%;
+  width: 100px;
+  border-radius: 50%;
 }
 
 .meta,
