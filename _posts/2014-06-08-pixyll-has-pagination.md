@@ -21,7 +21,7 @@ categories: jekyll pixyll
       display: block;
       margin-left: auto; 
       margin-right: auto;
-      width: 100%;
+      width: 1200px;
       height: 1200px;
     }  
     &lt;/style&gt;
