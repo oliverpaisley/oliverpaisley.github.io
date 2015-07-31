@@ -5,7 +5,6 @@ date:       2014-06-08 11:21:29
 summary:    This is an empty post to illustrate the pagination component with Pixyll.
 categories: jekyll pixyll
 ---
-
 <iframe srcdoc=' &lt;!doctype HTML&gt;
 &lt;meta charset = &#039;utf-8&#039;&gt;
 &lt;html&gt;
@@ -20,10 +19,10 @@ categories: jekyll pixyll
     &lt;style&gt;
     .rChart {
       display: block;
-      margin-left: 5%; 
-      margin-right: %;
-      width: 100%;
-      height: 100%;
+      margin-left: auto; 
+      margin-right: auto;
+      width: 800px;
+      height: 400px;
     }  
     &lt;/style&gt;
     
@@ -38,6 +37,8 @@ categories: jekyll pixyll
     function drawchart193c47207c88(){  
       var opts = {
  &quot;dom&quot;: &quot;chart193c47207c88&quot;,
+&quot;width&quot;:    800,
+&quot;height&quot;:    400,
 &quot;x&quot;: &quot;year&quot;,
 &quot;y&quot;: &quot;norm_count&quot;,
 &quot;group&quot;: &quot;sex&quot;,
