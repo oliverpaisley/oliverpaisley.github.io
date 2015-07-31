@@ -4,13 +4,13 @@
 }
 
 .posts .post {
-  margin-bottom: 0.75em;
+  margin-bottom: none;
   border-bottom: thin solid #f3f3f3;
 }
 
 .posts .post:last-child {
   border-bottom: none;
-  margin-bottom: .375em;
+  margin-bottom: none;
   padding-bottom: 0;
 }
 
