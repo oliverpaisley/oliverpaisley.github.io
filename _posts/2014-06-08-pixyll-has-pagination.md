@@ -303,5 +303,3 @@ categories: jekyll pixyll
   &lt;/body&gt;
 &lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  nvd3  ' id='iframe-chart193c47207c88'> </iframe>
  <style>iframe.rChart{ width: 1200px; height: 1200px;}</style>
- 
- test test test
