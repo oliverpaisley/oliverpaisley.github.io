@@ -4,7 +4,7 @@ email:       oliver@observabledata.com
 author:      Oliver Paisley
 description: "A website dedicated to data visualizations."
 baseurl:     ""
-url:         "http://observabledata.com"
+url:         "oliverpaisley.github.io"
 
 # Google analytics
 google_analytics:
