@@ -38,8 +38,8 @@ categories: jekyll pixyll
     function drawchart193c47207c88(){  
       var opts = {
  "dom": "chart193c47207c88",
-"width":    800,
-"height":    400,
+"width":    1200,
+"height":    1200,
 "x": "year",
 "y": "norm_count",
 "group": "sex",
