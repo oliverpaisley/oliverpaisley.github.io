@@ -1,10 +1,10 @@
 # Site settings
-title:       Pixyll
-email:       your_email@example.com
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
-baseurl:     ""
-url:         "http://pixyll.com"
+title:       Observable Data
+email:       oliverjdpaisley@gmail.com
+author:      Oliver Paisley
+description: "A website dedicated to data visualizations."
+baseurl:     "oliverpaisley.github.io"
+url:         "oliverpaisley.github.io"
 
 # Google analytics
 google_analytics:
