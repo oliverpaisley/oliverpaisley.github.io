@@ -22,8 +22,8 @@ categories: jekyll pixyll
       display: block;
       margin-left: auto; 
       margin-right: auto;
-      width: 1200px;
-      height: 1200px;
+      width: 1500px;
+      height: 1500px;
     }  
     </style>
     
@@ -38,8 +38,6 @@ categories: jekyll pixyll
     function drawchart193c47207c88(){  
       var opts = {
  "dom": "chart193c47207c88",
-"width":    1200,
-"height":    1200,
 "x": "year",
 "y": "norm_count",
 "group": "sex",
