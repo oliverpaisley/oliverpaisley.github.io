@@ -38,6 +38,8 @@ categories: jekyll pixyll
     function drawchart193c47207c88(){  
       var opts = {
  &quot;dom&quot;: &quot;chart193c47207c88&quot;,
+&quot;width&quot;:    800,
+&quot;height&quot;:    400,
 &quot;x&quot;: &quot;year&quot;,
 &quot;y&quot;: &quot;norm_count&quot;,
 &quot;group&quot;: &quot;sex&quot;,
@@ -303,7 +305,6 @@ categories: jekyll pixyll
     &lt;script&gt;&lt;/script&gt;    
   &lt;/body&gt;
 &lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  nvd3  ' id='iframe-chart193c47207c88'> </iframe>
- <style>iframe.rChart{ width: 100%; height: 100%;}</style>
- 
+ <style>iframe.rChart{ width: 100%; height: 400px;}</style>
  
  test test test
