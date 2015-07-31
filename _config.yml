@@ -3,8 +3,8 @@ title:       Observable Data
 email:       oliverjdpaisley@gmail.com
 author:      Oliver Paisley
 description: "A website dedicated to data visualizations."
-baseurl:     ""
-url:         "oliverpaisley.github.io"
+baseurl:     "oliverpaisley.github.io"
+url:         ""
 
 # Google analytics
 google_analytics:
