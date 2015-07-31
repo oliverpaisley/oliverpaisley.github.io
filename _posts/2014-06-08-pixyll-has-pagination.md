@@ -21,7 +21,7 @@ categories: jekyll pixyll
       display: block;
       margin-left: auto; 
       margin-right: auto;
-      width: 1200px;
+      width: 100%;
       height: 1200px;
     }  
     &lt;/style&gt;
@@ -302,6 +302,6 @@ categories: jekyll pixyll
     &lt;script&gt;&lt;/script&gt;    
   &lt;/body&gt;
 &lt;/html&gt; ' scrolling='no' frameBorder='0' seamless class='rChart  nvd3  ' id='iframe-chart193c47207c88'> </iframe>
- <style>iframe.rChart{ width: 100%; height: 400px;}</style>
+ <style>iframe.rChart{ width: 100%; height: 1200px;}</style>
  
  test test test
