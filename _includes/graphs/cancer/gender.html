@@ -14,28 +14,28 @@
       display: block;
       margin-left: auto;
       margin-right: auto;
-      width: 100%;
-      height: 400px;
+      width: 800px;
+      height: 100%;
     }
     </style>
 
   </head>
   <body >
 
-    <div id = 'chartdf486a56ae' class = 'rChart nvd3'></div>
+    <div id = 'chart3807bf53029' class = 'rChart nvd3'></div>
     <script type='text/javascript'>
  $(document).ready(function(){
-      drawchartdf486a56ae()
+      drawchart3807bf53029()
     });
-    function drawchartdf486a56ae(){
+    function drawchart3807bf53029(){
       var opts = {
- "dom": "chartdf486a56ae",
+ "dom": "chart3807bf53029",
 "x": "year",
 "y": "norm_count",
 "group": "sex",
 "type": "lineChart",
 "disabled": [ false, false, true ],
-"id": "chartdf486a56ae"
+"id": "chart3807bf53029"
 },
         data = [
  {
@@ -46,37 +46,37 @@
 {
  "year": "2000",
 "sex": "Female",
-"norm_count":        454.643
+"norm_count":         454.64
 },
 {
  "year": "2001",
 "sex": "Female",
-"norm_count":        464.166
+"norm_count":         464.17
 },
 {
  "year": "2002",
 "sex": "Female",
-"norm_count":        462.543
+"norm_count":         462.54
 },
 {
  "year": "2003",
 "sex": "Female",
-"norm_count":        456.814
+"norm_count":         456.81
 },
 {
  "year": "2004",
 "sex": "Female",
-"norm_count":        459.218
+"norm_count":         459.22
 },
 {
  "year": "2005",
 "sex": "Female",
-"norm_count":        464.404
+"norm_count":          464.4
 },
 {
  "year": "2006",
 "sex": "Female",
-"norm_count":        467.431
+"norm_count":         467.43
 },
 {
  "year": "2007",
@@ -86,22 +86,22 @@
 {
  "year": "2008",
 "sex": "Female",
-"norm_count":        478.982
+"norm_count":         478.98
 },
 {
  "year": "2009",
 "sex": "Female",
-"norm_count":        482.046
+"norm_count":         482.05
 },
 {
  "year": "2010",
 "sex": "Female",
-"norm_count":        474.207
+"norm_count":         474.21
 },
 {
  "year": "2011",
 "sex": "Female",
-"norm_count":        475.201
+"norm_count":          475.2
 },
 {
  "year": "1999",
@@ -111,47 +111,47 @@
 {
  "year": "2000",
 "sex": "Male",
-"norm_count":        506.013
+"norm_count":         506.01
 },
 {
  "year": "2001",
 "sex": "Male",
-"norm_count":        518.128
+"norm_count":         518.13
 },
 {
  "year": "2002",
 "sex": "Male",
-"norm_count":        519.878
+"norm_count":         519.88
 },
 {
  "year": "2003",
 "sex": "Male",
-"norm_count":        511.398
+"norm_count":          511.4
 },
 {
  "year": "2004",
 "sex": "Male",
-"norm_count":        513.078
+"norm_count":         513.08
 },
 {
  "year": "2005",
 "sex": "Male",
-"norm_count":        516.286
+"norm_count":         516.29
 },
 {
  "year": "2006",
 "sex": "Male",
-"norm_count":        526.866
+"norm_count":         526.87
 },
 {
  "year": "2007",
 "sex": "Male",
-"norm_count":        540.107
+"norm_count":         540.11
 },
 {
  "year": "2008",
 "sex": "Male",
-"norm_count":        535.255
+"norm_count":         535.25
 },
 {
  "year": "2009",
@@ -161,7 +161,7 @@
 {
  "year": "2010",
 "sex": "Male",
-"norm_count":        518.798
+"norm_count":          518.8
 },
 {
  "year": "2011",
@@ -171,17 +171,17 @@
 {
  "year": "1999",
 "sex": "Male and Female",
-"norm_count":        477.299
+"norm_count":          477.3
 },
 {
  "year": "2000",
 "sex": "Male and Female",
-"norm_count":        479.857
+"norm_count":         479.86
 },
 {
  "year": "2001",
 "sex": "Male and Female",
-"norm_count":        490.674
+"norm_count":         490.67
 },
 {
  "year": "2002",
@@ -191,47 +191,47 @@
 {
  "year": "2003",
 "sex": "Male and Female",
-"norm_count":        483.617
+"norm_count":         483.62
 },
 {
  "year": "2004",
 "sex": "Male and Female",
-"norm_count":        485.674
+"norm_count":         485.67
 },
 {
  "year": "2005",
 "sex": "Male and Female",
-"norm_count":        489.895
+"norm_count":          489.9
 },
 {
  "year": "2006",
 "sex": "Male and Female",
-"norm_count":        496.642
+"norm_count":         496.64
 },
 {
  "year": "2007",
 "sex": "Male and Female",
-"norm_count":        505.909
+"norm_count":         505.91
 },
 {
  "year": "2008",
 "sex": "Male and Female",
-"norm_count":        506.645
+"norm_count":         506.65
 },
 {
  "year": "2009",
 "sex": "Male and Female",
-"norm_count":        505.895
+"norm_count":          505.9
 },
 {
  "year": "2010",
 "sex": "Male and Female",
-"norm_count":        496.131
+"norm_count":         496.13
 },
 {
  "year": "2011",
 "sex": "Male and Female",
-"norm_count":        496.026
+"norm_count":         496.03
 }
 ]
 
@@ -269,6 +269,10 @@
         return '<h3>' + key + '</h3>' +
               '<p>' + y + ' per 100,000 diagnosed in ' + x + '</p>'
               } )
+
+
+
+
 
         chart.yAxis
   .showMaxMin(false)
