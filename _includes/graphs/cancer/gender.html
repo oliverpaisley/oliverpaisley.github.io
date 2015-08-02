@@ -22,20 +22,20 @@
   </head>
   <body >
 
-    <div id = 'chart3807bf53029' class = 'rChart nvd3'></div>
+    <div id = 'chart3804d6567eb' class = 'rChart nvd3'></div>
     <script type='text/javascript'>
  $(document).ready(function(){
-      drawchart3807bf53029()
+      drawchart3804d6567eb()
     });
-    function drawchart3807bf53029(){
+    function drawchart3804d6567eb(){
       var opts = {
- "dom": "chart3807bf53029",
+ "dom": "chart3804d6567eb",
 "x": "year",
 "y": "norm_count",
 "group": "sex",
 "type": "lineChart",
 "disabled": [ false, false, true ],
-"id": "chart3807bf53029"
+"id": "chart3804d6567eb"
 },
         data = [
  {
@@ -270,7 +270,8 @@
               '<p>' + y + ' per 100,000 diagnosed in ' + x + '</p>'
               } )
 
-
+        chart.xAxis
+  .axisLabel("Year")
 
 
 
