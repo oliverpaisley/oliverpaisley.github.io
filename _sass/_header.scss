@@ -24,10 +24,12 @@
 }
 
 .site-header nav a {
-  margin-top: 0;
   color: #000000;
   border-bottom: 4px solid #000000;
-  height: 25px;
+}
+
+.site-header nav.site-nav {
+  margin: 0;
 }
 
 .site-header nav a:hover,
