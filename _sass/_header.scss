@@ -1,6 +1,9 @@
 .site-header {
   padding-top: $space-1;
   padding-bottom: $space-2;
+  align-content: top;
+  align-self: top;
+  align-items: top;
 }
 
 .site-header a {
@@ -13,7 +16,6 @@
 .site-header .site-title {
   font-size: $h1;
   border-bottom: 4px solid #000000;
-  text-align: top;
 }
 
 .site-header .site-title:hover,
@@ -24,8 +26,7 @@
 
 .site-header nav a {
   color: #000000;
-  border-bottom: 2px solid #000000;
-  align-content: top;
+  border-bottom: 2px dotted #000000;
 }
 
 .site-header nav a:hover,
