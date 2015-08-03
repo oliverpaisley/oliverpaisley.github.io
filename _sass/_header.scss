@@ -5,7 +5,7 @@
 
 .site-header a {
   color: #333;
-  font-size: $h3;
+  font-size: $h1-responsive-max;
   font-weight: 300;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .site-nav a + a {
-  margin-left: 2em;
+  margin-left: 0;
 }
 
 .site-header a:hover,
