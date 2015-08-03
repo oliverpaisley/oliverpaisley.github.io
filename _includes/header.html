@@ -3,16 +3,14 @@
     <div class="measure">
       <div align="center">
         <a href="{{ site.url }}" class="site-title"><h1>{{ site.title }}</h1></a>
-      </div>
-      <nav class="site-nav">
-        <div align="center">
+        <nav class="site-nav">
           {% include navigation.html %}
-        </div>
-      </nav>
-      <div class="clearfix"></div>
-      {% if site.show_social_icons %}
-        {% include social_links.html %}
-      {% endif %}
+        </nav>
+        <div class="clearfix"></div>
+        {% if site.show_social_icons %}
+          {% include social_links.html %}
+        {% endif %}
+      </div>
     </div>
   </div>
 </header>
