@@ -1,6 +1,7 @@
 .site-header {
   padding-top: $space-1;
   padding-bottom: $space-2;
+  width: $measure-width;
 }
 
 .site-header a {
@@ -10,19 +11,15 @@
 }
 
 .site-header .site-title {
-  font-size: $h1;
-  width: $measure-width;
-  text-align: center;
 }
 
 .site-nav {
   margin-top: $space-2;
+  text-align: center;
 }
 
 .site-header nav a {
   color: #666;
-  width: $measure-width;
-  text-align: center;
 }
 
 .site-header nav a:hover,
