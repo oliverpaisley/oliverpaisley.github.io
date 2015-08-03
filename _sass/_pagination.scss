@@ -6,6 +6,7 @@
 }
 
 .pagination a, .pagination .disabled {
+  color: #000000;
   border-bottom: 2px solid #444;
 }
 
@@ -13,10 +14,4 @@
 .pagination a:focus,
 .pagination a:active {
   border-bottom: none;
-}
-
-.pagination .button {
-  font-size: 1rem;
-  font-weight: 300;
-  letter-spacing: 1px;
 }
