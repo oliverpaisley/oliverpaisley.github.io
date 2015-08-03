@@ -5,12 +5,11 @@
 
 .site-header a {
   color: #000000;
-  font-size: $h1;
+  font-size: $h0;
   font-weight: 300;
 }
 
-.site-header a.site-title {
-  font-size: 30px;
+.site-header .site-title {
   border-bottom: 4px solid #000000;
 }
 
