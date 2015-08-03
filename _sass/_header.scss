@@ -1,13 +1,9 @@
-.site-header {
-  padding-top: $space-1;
-  padding-bottom: $space-2;
-}
+
 
 .site-header a {
   color: #333;
   font-size: $h3;
   font-weight: 300;
-  text-align: center;
 }
 
 .site-header .site-title {
@@ -16,7 +12,6 @@
 
 .site-nav {
   margin-top: $space-2;
-  text-align: center;
 }
 
 .site-header nav a {
@@ -40,4 +35,17 @@
 .posts .post a:hover .post-title,
 .posts .post a:hover .post-summary {
   opacity: 0.88;
+}
+
+.site-header {
+  text-align: center;
+}
+
+.site-header .site-nav {
+  text-align: center;
+}
+
+.social-icons .left, .social-icons .right {
+  text-align: center;
+  float: none;
 }
