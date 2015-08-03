@@ -1,14 +1,14 @@
 .site-header {
   padding-top: $space-1;
   padding-bottom: $space-2;
-  width: $measure-width;
-  text-align: center;
 }
 
 .site-header a {
   color: #333;
   font-size: $h3;
   font-weight: 300;
+  width: $measure-width;
+  text-align: center;
 }
 
 .site-header .site-title {
