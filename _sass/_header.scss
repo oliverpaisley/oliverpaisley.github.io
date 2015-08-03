@@ -4,14 +4,14 @@
 }
 
 .site-header a {
-  color: #333;
+  color: #000000;
   font-size: $h3;
   font-weight: 300;
 }
 
 .site-header .site-title {
   font-size: $h1;
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid #000000;
 }
 
 .site-header .site-title:hover,
@@ -25,8 +25,8 @@
 }
 
 .site-header nav a {
-  color: #666;
-  border-bottom: 2px solid #444;
+  color: #000000;
+  border-bottom: 2px solid #000000;
 }
 
 .site-header nav a:hover,
