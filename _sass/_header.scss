@@ -1,4 +1,7 @@
-
+.site-header {
+  padding-top: $space-1;
+  padding-bottom: $space-2;
+}
 
 .site-header a {
   color: #333;
@@ -26,7 +29,9 @@
   border-bottom: 2px solid #444;
 }
 
-
+.site-nav a + a {
+  margin-left: 2em;
+}
 
 .site-header a:hover,
 .posts .post a:hover .post-meta,

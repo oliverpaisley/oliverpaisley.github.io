@@ -1,8 +1,10 @@
 .clearfix:before, .clearfix:after {
   content: ' ';
   display: table;
+  text-align: center;
 }
 
 .clearfix:after {
   clear: both;
+  text-align: center;
 }
