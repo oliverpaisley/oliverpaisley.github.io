@@ -1,11 +1,12 @@
 .social-icons {
   font-size: 1.25rem;
   width: 100%;
-  align-self: top;
 }
 
 .social-icons a.fa {
   cursor: pointer;
   padding: 0.2em;
   border-bottom: none;
+  align-items: top;
+  align-content: top;
 }
