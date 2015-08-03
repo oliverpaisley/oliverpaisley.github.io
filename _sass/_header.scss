@@ -10,7 +10,7 @@
 }
 
 .site-header .site-title {
-  font-size: 3rem;
+  font-size: $h1;
 }
 
 .site-nav {
@@ -30,7 +30,7 @@
 }
 
 .site-nav a + a {
-  margin-left: 2em;
+  margin-left: 0;
 }
 
 .site-header a:hover,
