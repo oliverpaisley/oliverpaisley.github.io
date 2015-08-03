@@ -21,8 +21,6 @@
 
 .site-header nav a {
   color: #666;
-  width: $measure-width;
-  text-align: center;
 }
 
 .site-header nav a:hover,
@@ -34,6 +32,7 @@
 }
 
 .site-nav a + a {
+  margin-left: 2em;
 }
 
 .site-header a:hover,
