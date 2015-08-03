@@ -14,7 +14,7 @@
 }
 
 .site-nav {
-  margin-top: 0;
+  margin-top: $space-2;
 }
 
 .site-header nav a {
@@ -30,7 +30,7 @@
 }
 
 .site-nav a + a {
-  margin-left: 0;
+  margin-left: 2em;
 }
 
 .site-header a:hover,
