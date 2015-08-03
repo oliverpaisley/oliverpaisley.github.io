@@ -20,13 +20,16 @@
   opacity: 0.5;
 }
 
-.pagination a:hover, .pagination a:focus {
+.pagination a:hover,
+.pagination a:focus {
   background: white;
   color: #477dca;
+  border-bottom: none;
 }
 
 .pagination a:active {
   background: #f7f7f7;
+  border-bottom: 2px solid #444;
 }
 
 .pagination .button {
