@@ -11,17 +11,14 @@
 
 .site-header .site-title {
   font-size: $h1;
-  text-align:center;
 }
 
 .site-nav {
   margin-top: 0;
-  text-align:center;
 }
 
 .site-header nav a {
   color: #666;
-  text-align:center;
 }
 
 .site-header nav a:hover,
@@ -33,7 +30,7 @@
 }
 
 .site-nav a + a {
-  margin-left: 2em;
+  margin-left: 0;
 }
 
 .site-header a:hover,
