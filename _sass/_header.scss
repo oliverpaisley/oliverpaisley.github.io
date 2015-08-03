@@ -7,16 +7,18 @@
   color: #333;
   font-size: $h3;
   font-weight: 300;
-  width: $measure-width;
-  text-align: center;
 }
 
 .site-header .site-title {
   font-size: $h1;
+  width: $measure-width;
+  text-align: center;
 }
 
 .site-nav {
   margin-top: $space-2;
+  width: $measure-width;
+  text-align: center;
 }
 
 .site-header nav a {
