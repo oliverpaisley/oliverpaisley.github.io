@@ -22,11 +22,11 @@
 }
 
 .pagination a:hover, .pagination a:focus {
-  background: white;
-  color: #477dca;
+  border-bottom: none;
 }
 
 .pagination a:active {
+  border-bottom: 2px solid #444;
   background: #f7f7f7;
 }
 
