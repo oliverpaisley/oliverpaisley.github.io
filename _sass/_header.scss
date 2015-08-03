@@ -5,12 +5,12 @@
 
 .site-header a {
   color: #333;
-  font-size: 15px;
+  font-size: $h3;
   font-weight: 300;
 }
 
 .site-header .site-title {
-  font-size: 15px;
+  font-size: $h1;
 }
 
 .site-nav {
@@ -42,6 +42,10 @@
 
 .site-header {
   text-align: center;
+}
+
+.site-header .site-title {
+  font-size: 20px;
 }
 
 .site-header .site-nav {
