@@ -5,12 +5,12 @@
 
 .site-header a {
   color: #333;
-  font-size: $h1-responsive-max;
+  font-size: $h3;
   font-weight: 300;
 }
 
 .site-header .site-title {
-  font-size: $h1-responsive-max;
+  font-size: 500px;
 }
 
 .site-nav {
@@ -30,7 +30,7 @@
 }
 
 .site-nav a + a {
-  margin-left: 0;
+  margin-left: 2em;
 }
 
 .site-header a:hover,
