@@ -22,6 +22,14 @@
   border-bottom: 2px solid #444;
 }
 
+.post-link .post-title:hover,
+.post-link .post-title:focus,
+.post-link .post-title:active {
+  color: #444;
+  opacity: 1;
+  border-bottom: 2px solid #FFFFFF;
+}
+
 .post-footer {
   @extend .italic;
 
