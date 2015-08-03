@@ -3,12 +3,9 @@
     <div class="measure">
       <a href="{{ site.url }}" class="site-title"><font size="9">{{ site.title }}</font></a>
       <nav class="site-nav">
+        {% include social_links.html %}
         <font size="9">{% include navigation.html %}</font>
       </nav>
       <div class="clearfix"></div>
-      {% if site.show_social_icons %}
-        {% include social_links.html %}
-      {% endif %}
-    </div>
   </div>
 </header>
