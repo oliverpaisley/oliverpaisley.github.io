@@ -26,6 +26,7 @@
 .site-header nav a {
   color: #000000;
   border-bottom: 2px solid #000000;
+  height: 25px;
 }
 
 .site-header nav a:hover,
@@ -36,12 +37,6 @@
 
 .site-header {
   text-align: center;
-}
-
-.site-header a.site-nav {
-  align-items: top;
-  align-content: top;
-  text-align: top;
 }
 
 .social-icons .left,
