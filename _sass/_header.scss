@@ -14,7 +14,7 @@
 }
 
 .site-header a.site-title {
-  font-size: $h0;
+  font-size: $h1;
 }
 
 .site-header .site-title:hover,
@@ -24,6 +24,7 @@
 }
 
 .site-header nav a {
+  margin: 0;
   color: #000000;
   border-bottom: 2px solid #000000;
 }
