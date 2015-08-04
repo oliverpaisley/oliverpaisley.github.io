@@ -10,4 +10,6 @@ Created by Oliver Paisley. {% include my_twitter.html %}
 
 Built with Jekyll. Hosted on GitHub Pages.
 
-Pixyll theme by [John Otander](http://johnotander.com). {% include johns_twitter.html %}
+Pixyll theme by [John Otander](http://johnotander.com).
+
+{% include johns_twitter.html %}
