@@ -10,4 +10,4 @@ Observable Data is a website dedicated to data visualizations.
 * Built with Jekyll. Hosted on GitHub Pages.
 * Pixyll theme by [John Otander](http://johnotander.com). <font size="5"><a class="fa fa-twitter" href="https://twitter.com/4lpine"></a></font>
 
-* Pixyll theme by [John Otander](http://johnotander.com). <html>{% include navigation.html %}</html>
+* Pixyll theme by [John Otander](http://johnotander.com). <html>{% include social_links.html %}</html>
