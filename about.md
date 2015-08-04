@@ -10,6 +10,6 @@ Created by Oliver Paisley. </p> {% include my_twitter.html %}
 
 Built with Jekyll. Hosted on GitHub Pages.
 
-Pixyll theme by [John Otander](http://johnotander.com). <a style="border:"none" class="fa fa-twitter" href="https://twitter.com/4lpine"></a>
+Pixyll theme by [John Otander](http://johnotander.com). <a style=border:"none" class="fa fa-twitter" href="https://twitter.com/4lpine"></a>
 
 {% include johns_twitter.html %}
