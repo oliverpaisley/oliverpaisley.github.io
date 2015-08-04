@@ -9,12 +9,9 @@
   font-weight: 300;
 }
 
-.site-header .site-title {
-  border-bottom: 4px solid #000000;
-}
-
 .site-header a.site-title {
   font-size: $h1;
+  border-bottom: 4px solid #000000;
 }
 
 .site-header .site-title:hover,
