@@ -6,7 +6,7 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-{% highlight R %}
+{% highlight R linenos %}
 
 setwd("topics/cancer")
 library(dplyr)
