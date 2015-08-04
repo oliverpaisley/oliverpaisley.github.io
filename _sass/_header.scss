@@ -11,7 +11,7 @@
 
 .site-header a.site-title {
   font-size: $h1;
-  border-bottom: 4px solid #000000;
+  border-bottom: 4px dotted #000000;
 }
 
 .site-header .site-title:hover,
@@ -22,8 +22,8 @@
 
 .site-header nav a {
   color: #000000;
-  border-bottom: 4px dotted #000000;
-  font-size: 25px;
+  border-bottom: 4px solid #000000;
+  font-size: 100px;
 }
 
 .site-header nav a:hover,
@@ -34,10 +34,4 @@
 
 .site-header {
   text-align: center;
-}
-
-.social-icons .left,
-.social-icons .right {
-  text-align: center;
-  float: none;
 }
