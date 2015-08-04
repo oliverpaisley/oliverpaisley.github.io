@@ -23,7 +23,11 @@
 .site-header nav a {
   color: #000000;
   border-bottom: 4px solid #000000;
-  font-size: $h2;
+  font-size: $h3;
+}
+
+.site-header .site-nav {
+  margin-top: 2.8%;
 }
 
 .site-header nav a:hover,
