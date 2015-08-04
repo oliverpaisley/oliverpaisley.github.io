@@ -26,10 +26,11 @@
 .site-header nav a {
   color: #000000;
   border-bottom: 4px solid #000000;
+  font
 }
 
-.site-header nav.site-nav {
-  margin: 0;
+.site-header nav a {
+  font-size: $h2;
 }
 
 .site-header nav a:hover,
