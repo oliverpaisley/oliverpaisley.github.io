@@ -33,4 +33,6 @@ c1 <- site_data %>%
   mutate(norm_count = (as.integer(count) / as.integer(population)) * 1e5) %>%
   select(year, sex, norm_count)
 
+  ok ok
+
 {% endhighlight %}
