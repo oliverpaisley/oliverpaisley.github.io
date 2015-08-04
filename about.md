@@ -11,4 +11,4 @@ Observable Data is a website dedicated to data visualizations.
 * Pixyll theme by [John Otander](http://johnotander.com). <a class="fa fa-twitter" href="https://twitter.com/4lpine"></a> fa-lg
 
 
-* Pixyll theme by [John Otander](http://johnotander.com). {% include navigation.html %}
+* Pixyll theme by [John Otander](http://johnotander.com). {% include johns_twitter.html %}
