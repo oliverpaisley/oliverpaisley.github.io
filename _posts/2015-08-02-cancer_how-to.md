@@ -6,11 +6,10 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-{% highlight r linenos %}
+{% highlight R linenos %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
-
 site_data <- read.table("data/BYSITE.TXT",
                         sep = '|',
                         header = TRUE,
