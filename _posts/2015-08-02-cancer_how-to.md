@@ -6,7 +6,7 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-{% highlight css linenos %}
+```r
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
@@ -15,4 +15,4 @@ site_data <- read.table("data/BYSITE.TXT",
                         header = TRUE,
                         stringsAsFactors = FALSE)
 names(site_data) <- tolower(names(site_data))
-{% endhighlight %}
+```
