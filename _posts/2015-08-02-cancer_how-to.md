@@ -7,7 +7,6 @@ permalink:  /cancer-how-to/
 ---
 
 {% highlight r linenos %}
-setwd("topics/cancer")
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
@@ -31,8 +30,6 @@ c1 <- site_data %>%
          count != ".") %>%
   mutate(norm_count = (as.integer(count) / as.integer(population)) * 1e5) %>%
   select(year, sex, norm_count)
-
-  ok ok
 {% endhighlight %}
 
 test
