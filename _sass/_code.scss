@@ -28,7 +28,7 @@ pre {
 
 pre {
     counter-reset: line-numbering;
-    white-space: pre;
+    white-space: pre-wrap;
     overflow-x: auto;
     word-break: inherit;
     word-wrap: inherit;
