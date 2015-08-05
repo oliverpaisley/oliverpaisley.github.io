@@ -7,7 +7,6 @@ permalink:  /cancer-how-to/
 ---
 
 {% highlight r linenos %}
-
 setwd("topics/cancer")
 library(dplyr)
 library(rCharts)
