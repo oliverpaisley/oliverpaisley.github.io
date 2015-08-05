@@ -40,7 +40,7 @@ pre a::before {
   padding-right: 1em; /* space after numbers */
   width: 25px;
   text-align: right;
-  opacity: 0.7;
+  opacity: 0.9;
   display: inline-block;
   color: $light-gray;
   margin-right: 16px;
@@ -54,13 +54,13 @@ pre a::before {
 }
 
 pre a:first-of-type::before {
-  padding-top: 10px;
+  padding-top: 7px;
 }
 
 pre a:last-of-type::before {
-  padding-bottom: 10px;
+  padding-bottom: 7px;
 }
 
 pre a:only-of-type::before {
-  padding: 10px;
+  padding: 7px;
 }

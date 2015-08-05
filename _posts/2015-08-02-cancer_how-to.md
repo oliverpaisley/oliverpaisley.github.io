@@ -16,8 +16,6 @@ library(dplyr)
 library(rCharts)
 library(RColorBrewer)
 
-1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 
-
 site_data <- read.table("data/BYSITE.TXT",
                         sep = '|',
                         header = TRUE,
