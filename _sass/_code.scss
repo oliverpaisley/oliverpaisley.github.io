@@ -7,9 +7,6 @@ pre code {
 pre,
 code {
   font-family: $monospace-font-family;
-  display: block;
-  white-space: pre;
-  word-wrap: normal;
 }
 
 code {
@@ -66,13 +63,4 @@ pre a:last-of-type::before {
 
 pre a:only-of-type::before {
   padding: 10px;
-}
-
-.lineno {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
