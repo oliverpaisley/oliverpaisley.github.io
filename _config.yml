@@ -46,6 +46,7 @@ share_stumbleupon: false
 share_hackernews: false
 
 # Build settings
+highlighter: pygments
 markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
@@ -55,5 +56,3 @@ sass:
   compressed: true
 gems:
   - jekyll-sitemap
-
-highlighter: pygments
