@@ -1,6 +1,5 @@
 pre,
 pre code {
-  background-color: transparent;
   border-radius: $pre-border-radius;
 }
 
@@ -11,11 +10,6 @@ code {
 
 code {
   color: #7a7a7a;
-  border-top: none;
-}
-
-linenos {
-  border-top: none;
 }
 
 pre {
@@ -45,7 +39,7 @@ pre a::before {
   padding-right: 1em; /* space after numbers */
   width: 25px;
   text-align: right;
-  opacity: 1;
+  opacity: 0.7;
   display: inline-block;
   color: $light-gray;
   margin-right: 16px;
@@ -59,13 +53,13 @@ pre a::before {
 }
 
 pre a:first-of-type::before {
-  padding-top: 7px;
+  padding-top: 10px;
 }
 
 pre a:last-of-type::before {
-  padding-bottom: 7px;
+  padding-bottom: 10px;
 }
 
 pre a:only-of-type::before {
-  padding: 4px;
+  padding: 10px;
 }
