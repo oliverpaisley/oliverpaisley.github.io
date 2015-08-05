@@ -6,13 +6,14 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-```r
+{% highlight R %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
+
 site_data <- read.table("data/BYSITE.TXT",
                         sep = '|',
                         header = TRUE,
                         stringsAsFactors = FALSE)
 names(site_data) <- tolower(names(site_data))
-```
+{% endhighlight %}
