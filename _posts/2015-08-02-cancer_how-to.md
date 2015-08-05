@@ -34,7 +34,6 @@ c1 <- site_data %>%
   select(year, sex, norm_count)
 
   ok ok
-
 {% endhighlight %}
 
 test
