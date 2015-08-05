@@ -6,13 +6,11 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-{% highlight css %}
-
+{% highlight R %}
 setwd("topics/cancer")
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
-
 {% endhighlight %}
 
 test
