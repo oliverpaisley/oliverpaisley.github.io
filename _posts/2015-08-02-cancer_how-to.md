@@ -13,7 +13,6 @@ library(dplyr)
 library(rCharts)
 library(RColorBrewer)
 
-
 {% endhighlight %}
 
 test
