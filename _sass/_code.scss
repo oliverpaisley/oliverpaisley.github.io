@@ -28,7 +28,7 @@ pre {
 
 pre {
     counter-reset: line-numbering;
-    white-space: pre-wrap;
+    white-space: pre;
     overflow-x: auto;
     word-break: inherit;
     word-wrap: inherit;
@@ -63,4 +63,13 @@ pre a:last-of-type::before {
 
 pre a:only-of-type::before {
   padding: 10px;
+}
+
+table.highlighttable {
+  overflow-x: inherit;
+  display: block;
+}
+
+table.highlighttable td.code {
+  width: 100%;
 }
