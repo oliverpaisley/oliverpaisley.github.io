@@ -11,7 +11,7 @@ OK heres a test
 test
 
 
-{% highlight ruby linenos %}
+{% highlight r linenos %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
