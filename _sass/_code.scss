@@ -7,6 +7,10 @@ pre code {
 pre,
 code {
   font-family: $monospace-font-family;
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  word-wrap: normal;
 }
 
 code {
@@ -65,11 +69,7 @@ pre a:only-of-type::before {
   padding: 10px;
 }
 
-table.highlighttable {
-  overflow-x: auto;
-  display: block;
-}
-
-table.highlighttable td.code {
-  width: 100%;
+.highlight .lineno {
+  display:inline-block;
+  padding: 0 5px;
 }
