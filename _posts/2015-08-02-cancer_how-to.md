@@ -11,7 +11,7 @@ OK heres a test
 test
 
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
