@@ -10,6 +10,7 @@ permalink:  /cancer-how-to/
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
+
 site_data <- read.table("data/BYSITE.TXT",
                         sep = '|',
                         header = TRUE,
