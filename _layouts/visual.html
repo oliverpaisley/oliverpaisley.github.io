@@ -3,12 +3,14 @@ layout: default
 ---
 {% include google_analytics.html %}
 
-<div class="post-header mb2">
-  <h2>{{ page.title }}</h2>
+<div align="center">
+  <div class="post-header mb2">
+    <h2>{{ page.title }}</h2>
+  </div>
+  <article class="post-content">
+    {{ content }}
+  </article>
 </div>
-<article class="post-content">
-  {{ content }}
-</article>
 
 {% if site.show_sharing_icons %}
   {% include share_buttons.html %}
