@@ -6,7 +6,12 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-{% highlight R %}
+OK heres a test
+
+test
+
+
+{% highlight R linenos %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
