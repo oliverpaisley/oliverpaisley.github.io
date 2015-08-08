@@ -865,7 +865,7 @@ hr {
   padding: 2rem; }
 
 .py3 {
-  padding-top: 2rem;
+  padding-top: 1rem;
   padding-bottom: 2rem; }
 
 .px3 {
@@ -1286,7 +1286,6 @@ blockquote footer {
 .posts .post {
   margin: 0;
   margin-bottom: 0;
-  border-bottom: thin solid #dadada;
   padding-bottom: 0; }
 
 .posts .post:last-child {
@@ -1298,7 +1297,6 @@ blockquote footer {
   margin-top: 0;
   font-weight: 600;
   color: #333;
-  border-bottom: 2px solid #444;
   display: inline; }
 
 .post-link .post-title:hover,
@@ -1326,6 +1324,9 @@ blockquote footer {
 
 .related-post-title {
   border-bottom: thin solid #f3f3f3; }
+
+.post-header {
+  margin-top: -10px; }
 
 @media screen and (min-width: 32rem) {
   html {

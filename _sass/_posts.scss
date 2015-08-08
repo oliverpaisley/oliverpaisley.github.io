@@ -6,7 +6,6 @@
 .posts .post {
   margin: 0;
   margin-bottom: 0;
-  border-bottom: thin solid #dadada;
   padding-bottom: 0;
 }
 
@@ -20,7 +19,6 @@
   margin-top: 0;
   font-weight: 600;
   color: #333;
-  border-bottom: 2px solid #444;
   display: inline;
 }
 
@@ -55,4 +53,8 @@
 
 .related-post-title {
   border-bottom: thin solid #f3f3f3;
+}
+
+.post-header {
+  margin-top: -10px;
 }

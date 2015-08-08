@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Using R and rCharts to Visualize Cancer Rates in the US &#8211; Observable Data</title>
+    <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US &#8211; Observable Data</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="A breakdown of where to find the cancer data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared.">
     <meta name="author" content="Oliver Paisley">
@@ -22,7 +22,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508072158" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508072236" type="text/css">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
@@ -35,7 +35,7 @@
     <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Using R and rCharts to Visualize Cancer Rates in the US">
+    <meta property="og:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US">
     <meta property="og:description" content="A website dedicated to data visualizations.">
     <meta property="og:url" content="http://observabledata.com/cancer-how-to/">
     <meta property="og:site_name" content="Observable Data">
@@ -45,7 +45,7 @@
     
         <meta name="twitter:site" content="@oliverjdpaisley" />
     
-    <meta name="twitter:title" content="Using R and rCharts to Visualize Cancer Rates in the US" />
+    <meta name="twitter:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US" />
     <meta name="twitter:description" content="A breakdown of where to find the cancer data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared." />
     <meta name="twitter:url" content="http://observabledata.com/cancer-how-to/" />
 
@@ -96,7 +96,7 @@
 
 
 <div class="post-header mb2">
-  <h2>Using R and rCharts to Visualize Cancer Rates in the US</h2>
+  <h2>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</h2>
 </div>
 <article class="post-content">
   <ul>
@@ -133,7 +133,7 @@ age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span c
 
 <p>Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Can change year to 2011 to see how they compare.</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Change year to 2011 to see how they compare.</span>
 site_data <span class="o">%&gt;%</span>
   filter<span class="p">(</span>year       <span class="o">==</span> <span class="s">&quot;1999&quot;</span><span class="p">,</span>
          sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>

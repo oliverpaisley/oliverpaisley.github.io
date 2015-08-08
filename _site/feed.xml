@@ -7,6 +7,227 @@
     <atom:link href="http://observabledata.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Our goal is to create an interactive graph of cancer rates in the United States.&lt;/p&gt;
+
+&lt;p&gt;There is 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained &lt;a href=&quot;http://www.cdc.gov/cancer/npcr/uscs/download_data.htm&quot;&gt;here&lt;/a&gt;. The data is broken up into multiple files, depending on the variables of interest. We will be using the file &lt;code&gt;BYSITE.txt&lt;/code&gt; to compare sites (types of cancer), and the file &lt;code&gt;BYAGE.txt&lt;/code&gt; to compare age groups.&lt;/p&gt;
+
+&lt;p&gt;After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using &lt;a href=&quot;https://github.com/hadley/dplyr&quot;&gt;dplyr&lt;/a&gt; to process the data, &lt;a href=&quot;http://rcharts.io/&quot;&gt;rCharts&lt;/a&gt; to create the graphs, and &lt;a href=&quot;https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf&quot;&gt;RColorBrewer&lt;/a&gt; for pretty colors.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;dplyr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rCharts&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;RColorBrewer&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+site_data &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYSITE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+age_data  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYAGE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize &lt;a href=&quot;http://d3js.org/&quot;&gt;D3.js&lt;/a&gt;. The JavaScript library we will be connecting to is &lt;a href=&quot;http://nvd3.org/&quot;&gt;NVD3&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our first task is to create a graph where the x-axis is time (1999 to 2011), the y-axis is rate of cancer, and different colored lines represent different types of cancer. Therefore, we want 3 columns: year, cancer rate, and type of cancer. The number of rows will be equal to the number of combinations between year and type of cancer.&lt;/p&gt;
+
+&lt;p&gt;Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Change year to 2011 to see how they compare.&lt;/span&gt;
+site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1999&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         site&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;sites &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Respiratory System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&amp;quot;Digestive System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&amp;quot;Prostate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&amp;quot;Female Breast&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&amp;quot;Male Genital System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+           &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+c1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+ filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; sites
+        year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+ mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+ select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        site&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s &lt;code&gt;nPlot&lt;/code&gt; function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
+n1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;norm_count &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c1&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;site&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;lineChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
+n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axisLabel &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
+disable_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;site&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;
+n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; disable_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
+n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   brewer.pal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Dark2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
+n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + key + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + x + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you are using &lt;a href=&quot;https://www.rstudio.com/&quot;&gt;RStudio&lt;/a&gt;, you can just type &lt;code&gt;n1&lt;/code&gt; to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.&lt;/p&gt;
+
+&lt;p&gt;You can also easily embed the graph into an &lt;a href=&quot;http://rmarkdown.rstudio.com/&quot;&gt;R Markdown&lt;/a&gt; document, or publish it for free on &lt;a href=&quot;http://rpubs.com/&quot;&gt;RPubs&lt;/a&gt; or &lt;a href=&quot;https://gist.github.com/&quot;&gt;Gist&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Information on how to do these things is available on the &lt;a href=&quot;http://rcharts.readthedocs.org/en/latest/intro/share.html&quot;&gt;documentation for rCharts&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;c2 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         sex&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we use rCharts to create and customize our graph.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
+n2 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;norm_count &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c2&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;sex&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;lineChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
+n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axisLabel &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
+disable_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;sex&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;
+n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; disable_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
+n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hotpink&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                   &lt;span class=&quot;s&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
+n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;        return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + key + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;              &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + x + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;              } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 levels &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1-4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;5-9&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;10-14&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;15-19&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;20-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;s&quot;&gt;&amp;quot;25-29&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;30-34&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;35-39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;40-44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;45-49&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;s&quot;&gt;&amp;quot;50-54&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;55-59&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;60-64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;65-69&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;70-74&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                            &lt;span class=&quot;s&quot;&gt;&amp;quot;75-79&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;80-84&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;85+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                 ordered &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can move on to using dplyr and rCharts, and everything comes out as expected.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;c4 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; age_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+          age&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
+n4 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c4&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;multiBarChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
+n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         tickFormat &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(d) {return d} !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Age&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
+keep_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2011&amp;quot;&lt;/span&gt;
+n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;keep_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
+n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; colorRampPalette&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;brewer.pal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Dark2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
+n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;        return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + x + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + key + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Sun, 02 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://observabledata.com/cancer-how-to/</link>
+        <guid isPermaLink="true">http://observabledata.com/cancer-how-to/</guid>
+      </item>
+    
+      <item>
         <title>Cancer&amp;#58; 1999 to 2011</title>
         <description>&lt;h4 id=&quot;top-5-most-common-cancers&quot;&gt;Top 5 Most Common Cancers&lt;/h4&gt;
 
@@ -2645,257 +2866,36 @@
 &lt;/html&gt;
 
 </description>
-        <pubDate>Mon, 03 Aug 2015 00:00:00 -0700</pubDate>
+        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
         <link>http://observabledata.com/cancer/</link>
         <guid isPermaLink="true">http://observabledata.com/cancer/</guid>
       </item>
     
       <item>
-        <title>Using R and rCharts to Visualize Cancer Rates in the US</title>
-        <description>&lt;ul&gt;
-  &lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Our goal is to create an interactive graph of cancer rates in the United States.&lt;/p&gt;
-
-&lt;p&gt;There is 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained &lt;a href=&quot;http://www.cdc.gov/cancer/npcr/uscs/download_data.htm&quot;&gt;here&lt;/a&gt;. The data is broken up into multiple files, depending on the variables of interest. We will be using the file &lt;code&gt;BYSITE.txt&lt;/code&gt; to compare sites (types of cancer), and the file &lt;code&gt;BYAGE.txt&lt;/code&gt; to compare age groups.&lt;/p&gt;
-
-&lt;p&gt;After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using &lt;a href=&quot;https://github.com/hadley/dplyr&quot;&gt;dplyr&lt;/a&gt; to process the data, &lt;a href=&quot;http://rcharts.io/&quot;&gt;rCharts&lt;/a&gt; to create the graphs, and &lt;a href=&quot;https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf&quot;&gt;RColorBrewer&lt;/a&gt; for pretty colors.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;dplyr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rCharts&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;RColorBrewer&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-site_data &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYSITE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-age_data  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYAGE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize &lt;a href=&quot;http://d3js.org/&quot;&gt;D3.js&lt;/a&gt;. The JavaScript library we will be connecting to is &lt;a href=&quot;http://nvd3.org/&quot;&gt;NVD3&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Our first task is to create a graph where the x-axis is time (1999 to 2011), the y-axis is rate of cancer, and different colored lines represent different types of cancer. Therefore, we want 3 columns: year, cancer rate, and type of cancer. The number of rows will be equal to the number of combinations between year and type of cancer.&lt;/p&gt;
-
-&lt;p&gt;Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Can change year to 2011 to see how they compare.&lt;/span&gt;
-site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1999&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         site&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;sites &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Respiratory System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;s&quot;&gt;&amp;quot;Digestive System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;s&quot;&gt;&amp;quot;Prostate&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;s&quot;&gt;&amp;quot;Female Breast&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;s&quot;&gt;&amp;quot;Male Genital System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-c1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
- filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; sites
-        year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
- mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
- select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        site&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s &lt;code&gt;nPlot&lt;/code&gt; function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
-n1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;norm_count &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c1&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;site&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;lineChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
-n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axisLabel &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
-disable_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;site&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;
-n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; disable_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
-n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                   brewer.pal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Dark2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
-n1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + key + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + x + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you are using &lt;a href=&quot;https://www.rstudio.com/&quot;&gt;RStudio&lt;/a&gt;, you can just type &lt;code&gt;n1&lt;/code&gt; to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.&lt;/p&gt;
-
-&lt;p&gt;You can also easily embed the graph into an &lt;a href=&quot;http://rmarkdown.rstudio.com/&quot;&gt;R Markdown&lt;/a&gt; document, or publish it for free on &lt;a href=&quot;http://rpubs.com/&quot;&gt;RPubs&lt;/a&gt; or &lt;a href=&quot;https://gist.github.com/&quot;&gt;Gist&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Information on how to do these things is available on the &lt;a href=&quot;http://rcharts.readthedocs.org/en/latest/intro/share.html&quot;&gt;documentation for rCharts&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;c2 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; site_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         sex&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we use rCharts to create and customize our graph.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
-n2 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;norm_count &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c2&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;sex&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;lineChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
-n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axisLabel &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
-disable_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;sex&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;
-n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; disable_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
-n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hotpink&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                   &lt;span class=&quot;s&quot;&gt;&amp;quot;blue&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                   &lt;span class=&quot;s&quot;&gt;&amp;quot;black&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
-n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;        return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + key + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;              &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + x + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;              } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                 levels &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1-4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;5-9&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;10-14&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;15-19&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;20-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;25-29&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;30-34&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;35-39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;40-44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;45-49&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;50-54&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;55-59&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;60-64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;65-69&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;70-74&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;75-79&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;80-84&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;85+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                 ordered &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we can move on to using dplyr and rCharts, and everything comes out as expected.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;c4 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; age_data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Cancer Sites Combined&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         year       &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2007-2011&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         sex        &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Male and Female&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         race       &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;All Races&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         event_type &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Incidence&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         count      &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.integer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;population&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1e5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         rate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-          age&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
-n4 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            data  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; c4&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            group &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;year&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            type  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;multiBarChart&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Cleaning up the axes.&lt;/span&gt;
-n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;yAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Rate (per 100,000)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         width      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;47&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         tickFormat &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(d) {return d} !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;xAxis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;showMaxMin &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-         axisLabel  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Age&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Setting up which features are selected by default.&lt;/span&gt;
-keep_these &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2011&amp;quot;&lt;/span&gt;
-n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;disabled &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;keep_these&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Changing the color of the lines.&lt;/span&gt;
-n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;color &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; colorRampPalette&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;brewer.pal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Dark2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# Customizing the tooltip when you hover over an observation.&lt;/span&gt;
-n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tooltipContent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;#! function(key, x, y){&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;        return &amp;#39;&amp;lt;h3&amp;gt;&amp;#39; + x + &amp;#39;&amp;lt;/h3&amp;gt;&amp;#39; +&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + key + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
+        <title>test</title>
+        <description>&lt;p&gt;This is a test post.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 02 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/cancer-how-to/</link>
-        <guid isPermaLink="true">http://observabledata.com/cancer-how-to/</guid>
+        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
+        <link>http://observabledata.com/test3/2015/07/25/test3/</link>
+        <guid isPermaLink="true">http://observabledata.com/test3/2015/07/25/test3/</guid>
       </item>
     
       <item>
         <title>test</title>
         <description>&lt;p&gt;This is a test post.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test3/2015/08/01/test3/</link>
-        <guid isPermaLink="true">http://observabledata.com/test3/2015/08/01/test3/</guid>
+        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
+        <link>http://observabledata.com/test2/2015/07/25/test2/</link>
+        <guid isPermaLink="true">http://observabledata.com/test2/2015/07/25/test2/</guid>
       </item>
     
       <item>
         <title>test</title>
         <description>&lt;p&gt;This is a test post.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test2/2015/08/01/test2/</link>
-        <guid isPermaLink="true">http://observabledata.com/test2/2015/08/01/test2/</guid>
-      </item>
-    
-      <item>
-        <title>test</title>
-        <description>&lt;p&gt;This is a test post.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test1/2015/08/01/test1/</link>
-        <guid isPermaLink="true">http://observabledata.com/test1/2015/08/01/test1/</guid>
+        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
+        <link>http://observabledata.com/test1/2015/07/25/test1/</link>
+        <guid isPermaLink="true">http://observabledata.com/test1/2015/07/25/test1/</guid>
       </item>
     
   </channel>
