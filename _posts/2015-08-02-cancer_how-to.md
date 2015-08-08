@@ -6,7 +6,7 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
-* This post is an explanation on how I created the graphs {% post_url 2015-07-30-cancer %}.
+* This post is an explanation on how I created the graphs [here]({% post_url 2015-07-30-cancer %}).
 * It is assumed that basic knowledge of [R](https://www.r-project.org/) is known.
 
 Our goal is to create an interactive graph of cancer rates in the United States.

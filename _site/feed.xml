@@ -2651,10 +2651,8 @@
       </item>
     
       <item>
-        <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</title>
-        <description>&lt;p&gt;ok&lt;/p&gt;
-
-&lt;ul&gt;
+        <title>Using R and rCharts to Visualize Cancer Rates in the US</title>
+        <description>&lt;ul&gt;
   &lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
 &lt;/ul&gt;
@@ -2867,7 +2865,6 @@ n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot
 &lt;span class=&quot;s&quot;&gt;         &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + key + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;s&quot;&gt;         } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;okok&lt;/p&gt;
 </description>
         <pubDate>Sun, 02 Aug 2015 00:00:00 -0700</pubDate>
         <link>http://observabledata.com/cancer-how-to/</link>
