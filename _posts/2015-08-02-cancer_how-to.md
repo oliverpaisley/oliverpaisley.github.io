@@ -6,6 +6,9 @@ summary:    "A breakdown of where to find the cancer data, how to transform it i
 permalink:  /cancer-how-to/
 ---
 
+* This post is an explanation on how I created the graphs [here]({% post_url 2015-07-30-cancer %}).
+* It is assumed that basic knowledge of [R](https://www.r-project.org/) is known.
+
 Our goal is to create an interactive graph of cancer rates in the United States.
 
 There is 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained [here](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm). The data is broken up into multiple files, depending on the variables of interest. We will be using the file `BYSITE.txt` to compare sites (types of cancer), and the file `BYAGE.txt` to compare age groups.
@@ -17,14 +20,14 @@ library(dplyr)
 library(rCharts)
 library(RColorBrewer)
 
-site_data <- read.table("data/BYSITE.TXT",
-                        sep = '|',
-                        header = TRUE,
+site_data <- read.table("BYSITE.TXT",
+                        sep              = '|',
+                        header           = TRUE,
                         stringsAsFactors = FALSE)
 
-age_data  <- read.table("data/BYAGE.TXT",
-                        sep = '|',
-                        header = TRUE,
+age_data  <- read.table("BYAGE.TXT",
+                        sep              = '|',
+                        header           = TRUE,
                         stringsAsFactors = FALSE)
 
 names(age_data)  <- tolower(names(age_data))
@@ -47,13 +50,14 @@ site_data %>%
          count      != "~",
          count      != "-",
          count      != ".") %>%
-  mutate(norm_count = (as.integer(count) / as.integer(population)) * 1e5) %>%
-  arrange(norm_count) %>%
-  select(year, site) %>%
+  mutate(rate = (as.integer(count) / as.integer(population)) * 1e5) %>%
+  arrange(rate) %>%
+  select(year,
+         site) %>%
   tail(7)
 {% endhighlight %}
 
-Now it is time to subset based on those 5 cancer types, and also prepare our data for rCharts. We will include "All Cancer Sites Combined" for comparison purposes.
+Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include "All Cancer Sites Combined" for comparison purposes.
 
 {% highlight r %}
 sites <- c("Respiratory System",
@@ -64,14 +68,167 @@ sites <- c("Respiratory System",
            "All Cancer Sites Combined")
 
 c1 <- site_data %>%
- filter(year       != "2007-2011",
+ filter(site       %in% sites
+        year       != "2007-2011",
         sex        == "Male and Female",
         race       == "All Races",
         event_type == "Incidence",
         count      != "~",
         count      != "-",
-        count      != ".",
-        site       %in% sites) %>%
- mutate(norm_count = (as.integer(count) / as.integer(population)) * 1e5) %>%
- select(year, site, norm_count)
+        count      != ".",) %>%
+ mutate(rate = (as.integer(count) / as.integer(population)) * 1e5) %>%
+ select(year,
+        site,
+        rate)
+
+c1$rate <- round(c1$rate,
+                 digits = 2)
+{% endhighlight %}
+
+Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart's `nPlot` function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.
+
+{% highlight r %}
+# Creating the NVD3 object.
+n1 <- nPlot(norm_count ~ year,
+            data  = c1,
+            group = "site",
+            type  = "lineChart")
+
+# Cleaning up the axes.
+n1$yAxis(showMaxMin = FALSE,
+         axisLabel  = "Rate (per 100,000)",
+         width      = 47)
+n1$xAxis(axisLabel = "Year")
+
+# Setting up which features are selected by default.
+disable_these <- unique(c1$site) == "All Cancer Sites Combined"
+n1$set(disabled = disable_these)
+
+# Changing the color of the lines.
+n1$chart(color = c("black",
+                   brewer.pal(5, "Dark2")))
+
+# Customizing the tooltip when you hover over an observation.
+n1$chart(tooltipContent = "#! function(key, x, y){
+         return '<h3>' + key + '</h3>' +
+         '<p>' + y + ' per 100,000 diagnosed in ' + x + '</p>'
+         } !#")
+{% endhighlight %}
+
+If you are using [RStudio](https://www.rstudio.com/), you can just type `n1` to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.
+
+You can also easily embed the graph into an [R Markdown](http://rmarkdown.rstudio.com/) document, or publish it for free on [RPubs](http://rpubs.com/) or [Gist](https://gist.github.com/).
+
+Information on how to do these things is available on the [documentation for rCharts](http://rcharts.readthedocs.org/en/latest/intro/share.html).
+
+Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.
+
+{% highlight r %}
+c2 <- site_data %>%
+  filter(site       == "All Cancer Sites Combined",
+         year       != "2007-2011",
+         race       == "All Races",
+         event_type == "Incidence",
+         count      != "~",
+         count      != "-",
+         count      != ".") %>%
+  mutate(rate = (as.integer(count) / as.integer(population)) * 1e5) %>%
+  select(year,
+         sex,
+         rate)
+
+c2$rate <- round(c2$rate,
+                 digits = 2)
+{% endhighlight %}
+
+Now we use rCharts to create and customize our graph.
+
+{% highlight r %}
+# Creating the NVD3 object.
+n2 <- nPlot(norm_count ~ year,
+            data  = c2,
+            group = "sex",
+            type  = "lineChart")
+
+# Cleaning up the axes.
+n2$yAxis(showMaxMin = FALSE,
+         axisLabel  = "Rate (per 100,000)",
+         width      = 47)
+n2$xAxis(axisLabel = "Year")
+
+# Setting up which features are selected by default.
+disable_these <- unique(c2$sex) == "Male and Female"
+n2$set(disabled = disable_these)
+
+# Changing the color of the lines.
+n2$chart(color = c("hotpink",
+                   "blue",
+                   "black"))
+
+# Customizing the tooltip when you hover over an observation.
+n2$chart(tooltipContent = "#! function(key, x, y){
+        return '<h3>' + key + '</h3>' +
+              '<p>' + y + ' per 100,000 diagnosed in ' + x + '</p>'
+              } !#")
+{% endhighlight %}
+
+Creating a graph to compare races is almost exactly the same as the above code. Just replace "sex" with "race". Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.
+
+{% highlight r %}
+age_data$age <- factor(age_data$age,
+                 levels = c("<1", "1-4", "5-9", "10-14", "15-19", "20-24",
+                            "25-29", "30-34", "35-39", "40-44", "45-49",
+                            "50-54", "55-59", "60-64", "65-69", "70-74",
+                            "75-79", "80-84", "85+"),
+                 ordered = TRUE)
+{% endhighlight %}
+
+Now we can move on to using dplyr and rCharts, and everything comes out as expected.
+
+{% highlight r %}
+c4 <- age_data %>%
+  filter(site       == "All Cancer Sites Combined",
+         year       != "2007-2011",
+         sex        == "Male and Female",
+         race       == "All Races",
+         event_type == "Incidence",
+         count      != "~",
+         count      != "-",
+         count      != ".",) %>%
+  mutate(rate = (as.integer(count) / as.integer(population)) * 1e5) %>%
+  select(year,
+         age,
+         rate) %>%
+  arrange(year,
+          age)
+
+c4$rate <- round(c4$rate,
+                 digits = 2)
+
+# Creating the NVD3 object.
+n4 <- nPlot(rate ~ age,
+            data  = c4,
+            group = "year",
+            type  = "multiBarChart")
+
+# Cleaning up the axes.
+n4$yAxis(showMaxMin = FALSE,
+         axisLabel  = "Rate (per 100,000)",
+         width      = 47,
+         tickFormat = "#! function(d) {return d} !#")
+n4$xAxis(showMaxMin = FALSE,
+         axisLabel  = "Age")
+
+# Setting up which features are selected by default.
+keep_these <- unique(c4$year) == "2011"
+n4$set(disabled = !keep_these)
+
+# Changing the color of the lines.
+n4$chart(color = colorRampPalette(brewer.pal(8, "Dark2"))(13))
+
+# Customizing the tooltip when you hover over an observation.
+n4$chart(tooltipContent = "#! function(key, x, y){
+        return '<h3>' + x + '</h3>' +
+         '<p>' + y + ' per 100,000 diagnosed in ' + key + '</p>'
+         } !#")
 {% endhighlight %}
