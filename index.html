@@ -16,11 +16,12 @@ layout: default
             {{ post.excerpt }}
           {% endif %}
         </p>
+        
+        <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread" class="post-link">{{ post.title }}</a>
+
       </div>
     {% endfor %}
   </div>
 
   {% include pagination.html %}
-
-  <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread" class="post-link">{{ post.title }}</a>
 </div>
