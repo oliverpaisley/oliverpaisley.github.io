@@ -15,7 +15,7 @@
 
 &lt;p&gt;Our goal is to create an interactive graph of cancer rates in the United States.&lt;/p&gt;
 
-&lt;p&gt;There is 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained &lt;a href=&quot;http://www.cdc.gov/cancer/npcr/uscs/download_data.htm&quot;&gt;here&lt;/a&gt;. The data is broken up into multiple files, depending on the variables of interest. We will be using the file &lt;code&gt;BYSITE.txt&lt;/code&gt; to compare sites (types of cancer), and the file &lt;code&gt;BYAGE.txt&lt;/code&gt; to compare age groups.&lt;/p&gt;
+&lt;p&gt;There are 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained &lt;a href=&quot;http://www.cdc.gov/cancer/npcr/uscs/download_data.htm&quot;&gt;here&lt;/a&gt;. The data is broken up into multiple files, depending on the variables of interest. We will be using the file &lt;code&gt;BYSITE.txt&lt;/code&gt; to compare sites (types of cancer), and the file &lt;code&gt;BYAGE.txt&lt;/code&gt; to compare age groups.&lt;/p&gt;
 
 &lt;p&gt;After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using &lt;a href=&quot;https://github.com/hadley/dplyr&quot;&gt;dplyr&lt;/a&gt; to process the data, &lt;a href=&quot;http://rcharts.io/&quot;&gt;rCharts&lt;/a&gt; to create the graphs, and &lt;a href=&quot;https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf&quot;&gt;RColorBrewer&lt;/a&gt; for pretty colors.&lt;/p&gt;
 
@@ -167,11 +167,11 @@ n2&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot
 &lt;p&gt;Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                 levels &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1-4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;5-9&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;10-14&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;15-19&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;20-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;25-29&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;30-34&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;35-39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;40-44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;45-49&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;50-54&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;55-59&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;60-64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;65-69&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;70-74&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                            &lt;span class=&quot;s&quot;&gt;&amp;quot;75-79&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;80-84&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;85+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                 ordered &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+                       levels &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1-4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;5-9&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;10-14&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;15-19&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;20-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                  &lt;span class=&quot;s&quot;&gt;&amp;quot;25-29&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;30-34&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;35-39&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;40-44&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;45-49&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                  &lt;span class=&quot;s&quot;&gt;&amp;quot;50-54&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;55-59&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;60-64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;65-69&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;70-74&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                                  &lt;span class=&quot;s&quot;&gt;&amp;quot;75-79&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;80-84&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;85+&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+                       ordered &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Now we can move on to using dplyr and rCharts, and everything comes out as expected.&lt;/p&gt;
 
@@ -2870,33 +2870,6 @@ n4&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;chart&lt;span class=&quot;p&quot
         <pubDate>Sat, 01 Aug 2015 00:00:00 -0700</pubDate>
         <link>http://observabledata.com/cancer/</link>
         <guid isPermaLink="true">http://observabledata.com/cancer/</guid>
-      </item>
-    
-      <item>
-        <title>test</title>
-        <description>&lt;p&gt;This is a test post.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test3/2015/07/25/test3/</link>
-        <guid isPermaLink="true">http://observabledata.com/test3/2015/07/25/test3/</guid>
-      </item>
-    
-      <item>
-        <title>test</title>
-        <description>&lt;p&gt;This is a test post.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test2/2015/07/25/test2/</link>
-        <guid isPermaLink="true">http://observabledata.com/test2/2015/07/25/test2/</guid>
-      </item>
-    
-      <item>
-        <title>test</title>
-        <description>&lt;p&gt;This is a test post.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 25 Jul 2015 00:00:00 -0700</pubDate>
-        <link>http://observabledata.com/test1/2015/07/25/test1/</link>
-        <guid isPermaLink="true">http://observabledata.com/test1/2015/07/25/test1/</guid>
       </item>
     
   </channel>
