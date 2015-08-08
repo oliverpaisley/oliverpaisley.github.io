@@ -12,13 +12,11 @@ layout: default
         <p class="post-summary">
           {% if post.summary %}
             {{ post.summary }}
-          {% else %}
-            {{ post.excerpt }}
           {% endif %}
+
+          <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread" class="post-link">{{ post.title }}</a>
         </p>
         
-        <a href="{{ post.url | prepend: site.baseurl }}#disqus_thread" class="post-link">{{ post.title }}</a>
-
       </div>
     {% endfor %}
   </div>
