@@ -11,7 +11,7 @@ permalink:  /cancer-how-to/
 
 Our goal is to create an interactive graph of cancer rates in the United States.
 
-There is 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained [here](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm). The data is broken up into multiple files, depending on the variables of interest. We will be using the file `BYSITE.txt` to compare sites (types of cancer), and the file `BYAGE.txt` to compare age groups.
+There are 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained [here](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm). The data is broken up into multiple files, depending on the variables of interest. We will be using the file `BYSITE.txt` to compare sites (types of cancer), and the file `BYAGE.txt` to compare age groups.
 
 After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using [dplyr](https://github.com/hadley/dplyr) to process the data, [rCharts](http://rcharts.io/) to create the graphs, and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf) for pretty colors.
 
@@ -176,11 +176,11 @@ Creating a graph to compare races is almost exactly the same as the above code. 
 
 {% highlight r %}
 age_data$age <- factor(age_data$age,
-                 levels = c("<1", "1-4", "5-9", "10-14", "15-19", "20-24",
-                            "25-29", "30-34", "35-39", "40-44", "45-49",
-                            "50-54", "55-59", "60-64", "65-69", "70-74",
-                            "75-79", "80-84", "85+"),
-                 ordered = TRUE)
+                       levels = c("<1", "1-4", "5-9", "10-14", "15-19", "20-24",
+                                  "25-29", "30-34", "35-39", "40-44", "45-49",
+                                  "50-54", "55-59", "60-64", "65-69", "70-74",
+                                  "75-79", "80-84", "85+"),
+                       ordered = TRUE)
 {% endhighlight %}
 
 Now we can move on to using dplyr and rCharts, and everything comes out as expected.
