@@ -232,3 +232,5 @@ n4$chart(tooltipContent = "#! function(key, x, y){
          '<p>' + y + ' per 100,000 diagnosed in ' + key + '</p>'
          } !#")
 {% endhighlight %}
+
+I would like to end this post by thanking [Ramnath Vaidyanathan](http://ramnathv.github.io/) for all the work he has put into rCharts.
