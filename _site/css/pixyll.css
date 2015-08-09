@@ -914,13 +914,13 @@ body {
   -webkit-box-sizing: border-box; }
 
 a {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #333;
   color: #333; }
 
 a:hover,
 a:focus,
 a:active {
-  border-bottom: none;
+  border-bottom: 1px solid #ffffff;
   text-decoration: none; }
 
 .left {
@@ -929,7 +929,8 @@ a:active {
 .right {
   float: right; }
 
-.clearfix:before, .clearfix:after {
+.clearfix:before,
+.clearfix:after {
   content: ' ';
   display: table; }
 
@@ -1103,32 +1104,24 @@ small,
   padding-bottom: 1rem; }
 
 .site-header a {
-  color: #000000;
-  font-size: 1.25rem;
+  color: #333;
   font-weight: 300; }
 
-.site-header a.site-title {
-  font-size: 2rem; }
+.site-header .site-title {
+  font-size: 2.2rem; }
 
-.site-header .site-title:hover,
-.site-header .site-title:focus,
-.site-header .site-title:active {
-  border-bottom: none; }
+.visuals {
+  font-size: 1.5rem; }
+
+.about {
+  font-size: 1rem;
+  margin-left: 125px; }
+
+.site-nav {
+  margin-top: 1rem; }
 
 .site-header nav a {
-  color: #000000;
-  font-size: 1.25rem; }
-
-.site-header nav.site-nav {
-  margin-top: 2.8%; }
-
-.site-header nav a:hover,
-.site-header nav a:focus,
-.site-header nav a:active {
-  border-bottom: none; }
-
-.site-header {
-  text-align: center; }
+  color: #333; }
 
 /*
   Table styles copied from Bootstrap
@@ -1337,22 +1330,18 @@ blockquote footer {
   .h1 {
     font-size: 2.998rem; }
 
-  .site-header {
-    text-align: left; }
-
-  .site-nav {
-    margin-top: 0; }
-
-  .site-header a {
-    font-size: 1rem; }
-
   .site-header .site-title {
-    font-size: 1.25rem;
     float: left; }
 
-  .site-header .site-nav {
-    float: right;
-    margin-top: .25rem; }
+  .site-nav {
+    margin-top: .25rem;
+    text-align: center; }
+
+  .visuals {
+    text-align: center; }
+
+  .about {
+    float: right; }
 
   blockquote {
     margin-left: 2rem;

@@ -9,25 +9,26 @@
   }
 
   .site-header {
-    text-align: left;
-  }
-
-  .site-nav {
-    margin-top: 0;
   }
 
   .site-header a {
-    font-size: $h4;
   }
 
   .site-header .site-title {
-    font-size: $h3;
     float: left;
   }
 
-  .site-header .site-nav {
-    float: right;
+  .site-nav {
     margin-top: .25rem;
+    text-align: center;
+  }
+
+  .visuals {
+    text-align: center;
+  }
+
+  .about {
+    float: right;
   }
 
   blockquote {

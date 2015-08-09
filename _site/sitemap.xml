@@ -5,16 +5,18 @@
     <lastmod>2015-08-02T00:00:00-07:00</lastmod>
   </url>
   <url>
-    <loc>http://observabledata.com/cancer/</loc>
-    <lastmod>2015-08-01T00:00:00-07:00</lastmod>
-  </url>
-  <url>
     <loc>http://observabledata.com/404.html</loc>
   </url>
   <url>
     <loc>http://observabledata.com/about/</loc>
   </url>
   <url>
+    <loc>http://observabledata.com/visuals/cancer/</loc>
+  </url>
+  <url>
     <loc>http://observabledata.com/</loc>
+  </url>
+  <url>
+    <loc>http://observabledata.com/visuals/</loc>
   </url>
 </urlset>

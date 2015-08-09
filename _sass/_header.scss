@@ -4,36 +4,30 @@
 }
 
 .site-header a {
-  color: #000000;
-  font-size: $h3;
+  color: #333;
   font-weight: 300;
 }
 
-.site-header a.site-title {
-  font-size: $h1;
+.site-header .site-title {
+  font-size: 2.2rem;
 }
 
-.site-header .site-title:hover,
-.site-header .site-title:focus,
-.site-header .site-title:active {
-  border-bottom: none;
+.visuals {
+  font-size: 1.5rem;
+}
+
+.about {
+  font-size: 1rem;
+  margin-left: 125px;
+}
+
+.site-nav {
+  margin-top: $space-2;
 }
 
 .site-header nav a {
-  color: #000000;
-  font-size: $h3;
+  color: #333;
 }
 
-.site-header nav.site-nav {
-  margin-top: 2.8%;
-}
-
-.site-header nav a:hover,
-.site-header nav a:focus,
-.site-header nav a:active {
-  border-bottom: none;
-}
-
-.site-header {
-  text-align: center;
+.site-header .site-nav {
 }
