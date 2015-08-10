@@ -4,28 +4,16 @@
 }
 
 .posts .post {
-  margin: 0;
-  margin-bottom: 0;
-  padding-bottom: 0;
 }
 
 .posts .post:last-child {
-  border-bottom: none;
-  margin-bottom: .375em;
-  padding-bottom: 0;
 }
 
 .post-link .post-title {
-  margin-top: 0;
   font-weight: 600;
   color: #333;
   display: inline;
-}
-
-.post-link .post-title:hover,
-.post-link .post-title:focus,
-.post-link .post-title:active {
-  border-bottom: none;
+  margin-top: 20px;
 }
 
 .post-footer {
@@ -52,5 +40,4 @@
 }
 
 .post-header {
-  margin-top: -10px;
 }

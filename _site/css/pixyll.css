@@ -866,7 +866,7 @@ hr {
   padding: 2rem; }
 
 .py3 {
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   padding-bottom: 2rem; }
 
 .px3 {
@@ -1260,26 +1260,11 @@ blockquote footer {
 .posts {
   margin: 0; }
 
-.posts .post {
-  margin: 0;
-  margin-bottom: 0;
-  padding-bottom: 0; }
-
-.posts .post:last-child {
-  border-bottom: none;
-  margin-bottom: .375em;
-  padding-bottom: 0; }
-
 .post-link .post-title {
-  margin-top: 0;
   font-weight: 600;
   color: #333;
-  display: inline; }
-
-.post-link .post-title:hover,
-.post-link .post-title:focus,
-.post-link .post-title:active {
-  border-bottom: none; }
+  display: inline;
+  margin-top: 20px; }
 
 .post-footer {
   margin-top: .75rem;
@@ -1298,9 +1283,6 @@ blockquote footer {
   padding: 0;
   color: #7a7a7a;
   font-style: italic; }
-
-.post-header {
-  margin-top: -10px; }
 
 @media screen and (min-width: 32rem) {
   html {
