@@ -2,7 +2,7 @@
 title:       Observable Data
 email:       oliver@observabledata.com
 author:      "Oliver Paisley"
-description: "A website dedicated to data visualizations."
+description: "A blog about R, data science, and cool visualizations."
 baseurl:     ""
 url:         "http://observabledata.com"
 
