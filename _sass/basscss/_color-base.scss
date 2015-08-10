@@ -6,12 +6,13 @@ body {
 }
 
 a {
-  color: $blue;
+  color: #333;
   text-decoration: none;
+  border-bottom: 1px solid #333;
 }
 
 a:hover {
-  text-decoration: underline;
+  border-bottom: 1px solid #fff;
 }
 
 pre,

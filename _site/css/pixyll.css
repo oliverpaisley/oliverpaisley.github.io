@@ -599,11 +599,12 @@ body {
   background-color: white; }
 
 a {
-  color: #0076df;
-  text-decoration: none; }
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #333; }
 
 a:hover {
-  text-decoration: underline; }
+  border-bottom: 1px solid #fff; }
 
 pre,
 code {
@@ -912,15 +913,6 @@ body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box; }
-
-a {
-  border-bottom: 1px solid #333;
-  color: #333; }
-
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none; }
 
 .left {
   float: left; }
