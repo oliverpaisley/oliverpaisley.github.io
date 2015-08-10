@@ -21,4 +21,3 @@ permalink:  /visuals/cancer/
 #### Comparison of Age
 
 {% include visuals/cancer/age.html %}
-]

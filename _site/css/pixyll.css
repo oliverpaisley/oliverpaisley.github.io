@@ -110,7 +110,7 @@ svg {
 /* Basscss Base Typography */
 body {
   font-family: "Merriweather", "PT Serif", Georgia, "Times New Roman", serif;
-  line-height: 1.5;
+  line-height: 1.25;
   font-size: 100%; }
 
 h1,
@@ -920,7 +920,6 @@ a {
 a:hover,
 a:focus,
 a:active {
-  border-bottom: 1px solid #ffffff;
   text-decoration: none; }
 
 .left {
@@ -1001,7 +1000,7 @@ textarea,
 fieldset {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 0.5rem, 0.5rem; }
+  margin-bottom: 0, .5rem; }
 
 input[type=text],
 input[type=datetime],
@@ -1100,28 +1099,17 @@ small,
   font-size: 0.707rem; }
 
 .site-header {
-  padding-top: 0.5rem;
-  padding-bottom: 1rem; }
-
-.site-header a {
-  color: #333;
-  font-weight: 300; }
+  text-align: center;
+  color: #333; }
 
 .site-header .site-title {
-  font-size: 2.2rem; }
+  font-size: 2rem; }
 
-.visuals {
+.site-nav .visuals {
   font-size: 1.5rem; }
 
-.about {
-  font-size: 1rem;
-  margin-left: 125px; }
-
-.site-nav {
-  margin-top: 1rem; }
-
-.site-header nav a {
-  color: #333; }
+.site-nav .about {
+  font-size: 1rem; }
 
 /*
   Table styles copied from Bootstrap
@@ -1330,28 +1318,29 @@ blockquote footer {
   .h1 {
     font-size: 2.998rem; }
 
+  .site-header {
+    text-align: left; }
+
   .site-header .site-title {
+    font-size: 2rem;
     float: left; }
 
-  .site-nav {
-    margin-top: .25rem;
-    text-align: center; }
+  .site-header .site-nav {
+    float: right;
+    margin-top: 10px; }
 
-  .visuals {
-    text-align: center; }
+  .site-header .site-nav .visuals {
+    font-size: 1.5rem;
+    float: left;
+    margin-right: 19px; }
 
-  .about {
-    float: right; }
+  .site-header .site-nav .about {
+    font-size: 1.5rem;
+    float: left; }
 
   blockquote {
     margin-left: 2rem;
     padding: 2rem; } }
-@media screen and (min-width: 48rem) {
-  html {
-    font-size: 18px; } }
-@media screen and (min-width: 64rem) {
-  html {
-    font-size: 20px; } }
 .gist,
 .gist .highlight .p {
   font-size: .75rem; }

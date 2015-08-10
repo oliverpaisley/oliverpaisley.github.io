@@ -9,26 +9,28 @@
   }
 
   .site-header {
-  }
-
-  .site-header a {
+    text-align: left;
   }
 
   .site-header .site-title {
+    font-size: 2rem;
     float: left;
   }
 
-  .site-nav {
-    margin-top: .25rem;
-    text-align: center;
-  }
-
-  .visuals {
-    text-align: center;
-  }
-
-  .about {
+  .site-header .site-nav {
     float: right;
+    margin-top: 10px;
+  }
+
+  .site-header .site-nav .visuals {
+    font-size: 1.5rem;
+    float: left;
+    margin-right: 19px;
+  }
+
+  .site-header .site-nav .about {
+    font-size: 1.5rem;
+    float: left;
   }
 
   blockquote {
@@ -39,12 +41,10 @@
 
 @media screen and (min-width: $viewport-medium) {
   html {
-    font-size: 18px;
   }
 }
 
 @media screen and (min-width: $viewport-large) {
   html {
-    font-size: 20px;
   }
 }
