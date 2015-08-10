@@ -1,7 +1,7 @@
 # Site settings
 title:       Observable Data
 email:       oliver@observabledata.com
-author:      Oliver Paisley
+author:      "Oliver Paisley"
 description: "A website dedicated to data visualizations."
 baseurl:     ""
 url:         "http://observabledata.com"
