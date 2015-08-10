@@ -1098,10 +1098,12 @@ small,
   font-size: 2rem; }
 
 .site-nav .visuals {
-  font-size: 1.5rem; }
+  font-size: 1.5rem;
+  padding-top: 7px; }
 
 .site-nav .about {
-  font-size: 1rem; }
+  font-size: 1rem;
+  padding-top: 7px; }
 
 /*
   Table styles copied from Bootstrap
@@ -1306,11 +1308,13 @@ blockquote footer {
   .site-header .site-nav .visuals {
     font-size: 1.5rem;
     float: left;
-    margin-right: 19px; }
+    margin-right: 19px;
+    padding: 0px; }
 
   .site-header .site-nav .about {
     font-size: 1.5rem;
-    float: left; }
+    float: left;
+    padding: 0px; }
 
   blockquote {
     margin-left: 2rem;
