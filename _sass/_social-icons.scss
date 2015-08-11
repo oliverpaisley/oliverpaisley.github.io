@@ -3,15 +3,19 @@
   width: 5%;
 }
 
-.social-icons a.fa {
-  cursor: pointer;
-  padding: 0.2em;
-  border-bottom: none;
+.share-links {
+  padding-top: 15px;
+  margin-top: 16px;
+  margin-bottom: 15px;
 }
 
 .share-links a.fa {
   border: none;
   padding-left: 0.3em;
   padding-right: 0.3em;
-  padding-bottom: 7px;
+}
+
+.fb-like {
+  margin-left: 15px;
+  margin-bottom: 3px;
 }
