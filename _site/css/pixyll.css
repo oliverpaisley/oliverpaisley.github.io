@@ -852,7 +852,8 @@ hr {
   padding-right: 0.5rem; }
 
 .p2 {
-  padding: 1rem; }
+  padding: 1rem;
+  padding-top: 0rem; }
 
 .py2 {
   padding-top: 1rem;
@@ -1099,11 +1100,16 @@ small,
 
 .site-nav .visuals {
   font-size: 1.5rem;
-  padding-top: 7px; }
+  padding-top: 12px; }
 
 .site-nav .about {
   font-size: 1rem;
-  padding-top: 7px; }
+  padding-top: 12px; }
+
+.jester {
+  padding-top: 12px;
+  width: 58px;
+  height: 75px; }
 
 /*
   Table styles copied from Bootstrap
@@ -1310,6 +1316,12 @@ blockquote footer {
     font-size: 2rem;
     float: left; }
 
+  .jester {
+    width: 31px;
+    height: 41px;
+    padding-top: 0px;
+    padding-left: 15px; }
+
   .site-header .site-nav {
     float: right;
     margin-top: 10px; }
@@ -1324,6 +1336,9 @@ blockquote footer {
     font-size: 1.5rem;
     float: left;
     padding: 0px; }
+
+  .p2 {
+    padding: 1rem; }
 
   blockquote {
     margin-left: 2rem;
