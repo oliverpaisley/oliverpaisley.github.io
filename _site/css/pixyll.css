@@ -1309,33 +1309,28 @@ blockquote footer {
   .h1 {
     font-size: 2.998rem; }
 
-  .site-header {
-    text-align: left; }
-
   .site-header .site-title {
-    font-size: 2rem;
-    float: left; }
+    font-size: 2.5rem;
+    float: left;
+    margin-top: 19px; }
 
-  .jester {
-    width: 31px;
-    height: 41px;
+  .site-header .jester {
+    float: left;
+    width: 58px;
+    height: 72px;
     padding-top: 0px;
     padding-left: 15px; }
 
   .site-header .site-nav {
-    float: right;
-    margin-top: 10px; }
+    float: right; }
 
   .site-header .site-nav .visuals {
     font-size: 1.5rem;
-    float: left;
-    margin-right: 19px;
-    padding: 0px; }
+    padding-top: 0px; }
 
   .site-header .site-nav .about {
     font-size: 1.5rem;
-    float: left;
-    padding: 0px; }
+    padding-top: 9px; }
 
   .p2 {
     padding: 1rem; }
