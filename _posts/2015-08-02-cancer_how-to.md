@@ -10,7 +10,7 @@ tags:
   -rCharts
 ---
 
-* This post is an explanation on how I created the graphs [here]({ site.baseurl }/visuals/cancer).
+* This post is an explanation on how I created the graphs [here](/visuals/cancer/).
 * It is assumed that basic knowledge of [R](https://www.r-project.org/) is known.
 
 Our goal is to create an interactive graph of cancer rates in the United States.
