@@ -14,29 +14,22 @@
   .site-header .site-title {
     font-size: 3rem;
     float: left;
-    margin-top: 10px;
-  }
-
-  .site-header .jester {
-    float: left;
-    width: 58px;
-    height: 72px;
-    padding-top: 0px;
-    padding-left: 15px;
   }
 
   .site-header .site-nav {
     float: right;
+    margin-top: 8px;
   }
 
   .site-header .site-nav .visuals {
+    float: left;
     font-size: 1.5rem;
-    padding-top: 0px;
+    padding-right: 15px;
   }
 
   .site-header .site-nav .about {
+    float: right;
     font-size: 1.5rem;
-    padding-top: 9px;
   }
 
   .p2 {

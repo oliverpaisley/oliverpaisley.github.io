@@ -18,7 +18,7 @@
 /* Basscss Base Buttons */
 button,
 .button {
-  font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Roboto Slab", serif;
   font-size: inherit;
   font-weight: normal;
   text-decoration: none;
@@ -108,9 +108,12 @@ svg {
   max-height: 100%; }
 
 /* Basscss Base Typography */
+header {
+  line-height: 1; }
+
 body {
   font-family: "Roboto Slab", serif;
-  line-height: 1.25;
+  line-height: 1.5;
   font-size: 100%; }
 
 h1,
@@ -119,9 +122,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Roboto Slab", serif;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1;
   margin-top: 1em;
   margin-bottom: .5em; }
 
@@ -170,7 +173,7 @@ h1,
 
 h2,
 .h2 {
-  font-size: 1.5rem; }
+  font-size: 1.8rem; }
 
 h3,
 .h3 {
@@ -1106,11 +1109,6 @@ small,
   font-size: 1rem;
   padding-top: 12px; }
 
-.jester {
-  padding-top: 12px;
-  width: 58px;
-  height: 75px; }
-
 /*
   Table styles copied from Bootstrap
   Copyright (c) 2013 Twitter, Inc
@@ -1311,26 +1309,20 @@ blockquote footer {
 
   .site-header .site-title {
     font-size: 3rem;
-    float: left;
-    margin-top: 10px; }
-
-  .site-header .jester {
-    float: left;
-    width: 58px;
-    height: 72px;
-    padding-top: 0px;
-    padding-left: 15px; }
+    float: left; }
 
   .site-header .site-nav {
-    float: right; }
+    float: right;
+    margin-top: 8px; }
 
   .site-header .site-nav .visuals {
+    float: left;
     font-size: 1.5rem;
-    padding-top: 0px; }
+    padding-right: 15px; }
 
   .site-header .site-nav .about {
-    font-size: 1.5rem;
-    padding-top: 9px; }
+    float: right;
+    font-size: 1.5rem; }
 
   .p2 {
     padding: 1rem; }
