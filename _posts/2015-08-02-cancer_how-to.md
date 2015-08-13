@@ -15,7 +15,7 @@ tags:
 
 Our goal is to create an interactive graph of cancer rates in the United States.
 
-There are 12 years worth of data available from the Centers of Disease Control and Prevention, can it can be obtained [here](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm). The data is broken up into multiple files, depending on the variables of interest. We will be using the file `BYSITE.txt` to compare sites (types of cancer), and the file `BYAGE.txt` to compare age groups.
+There are 12 years worth of data available from the Centers of Disease Control and Prevention, and it can be obtained [here](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm). The data is broken up into multiple files, depending on the variables of interest. We will be using the file `BYSITE.txt` to compare sites (types of cancer), and the file `BYAGE.txt` to compare age groups.
 
 After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using [dplyr](https://github.com/hadley/dplyr) to process the data, [rCharts](http://rcharts.io/) to create the graphs, and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html) for pretty colors.
 
