@@ -942,76 +942,47 @@ code {
   font-family: "Source Code Pro", Consolas, monospace; }
 
 pre {
-  padding: 1.125em;
-  line-height: 1.11;
-  overflow-x: scroll;
+  padding-right: 1.125em;
+  padding-left: 1.125em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  line-height: 1.2;
   margin-bottom: 0.88em;
+  overflow-x: auto;
   background-color: #f1f1f1; }
 
 .highlight .p {
   font-size: 1.125rem;
   line-height: 1; }
 
-pre {
-  counter-reset: line-numbering;
-  white-space: pre;
-  overflow-x: auto;
-  word-break: inherit;
-  word-wrap: inherit; }
-
-pre a::before {
-  content: counter(line-numbering);
-  counter-increment: line-numbering;
-  margin-right: 1em;
-  /* space after numbers */
-  width: 25px;
-  text-align: left;
-  opacity: 0.7;
-  display: inline-block;
-  color: #777;
-  font-size: 13px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding-top: 4px;
-  border-right: 1px solid #333; }
-
-pre a:first-of-type::before {
-  padding-top: 7px; }
-
-pre a:last-of-type::before {
-  padding-bottom: 7px; }
-
-pre a:only-of-type::before {
-  padding: 10px; }
-
 .highlight a {
   border: 0px; }
 
+code {
+  counter-reset: linenumber; }
+
 .lineno {
-  content: counter(line-numbering);
-  counter-increment: line-numbering;
-  width: 25px;
-  text-align: left;
-  opacity: 0.7;
-  display: inline-block;
-  color: #777;
-  font-size: 13px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding-top: 4px;
-  border-right: 1px solid #333;
-  margin: 0px;
-  padding-right: 10px;
-  margin-right: 10px;
-  margin-left: -10px; }
+  visibility: hidden;
+  font-size: 0; }
+  .lineno::before {
+    opacity: 0.7;
+    padding-right: 10px;
+    margin-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    border-right: 1px solid #333;
+    font-size: 0.8rem;
+    content: "" counter(linenumber);
+    counter-increment: linenumber;
+    visibility: visible;
+    display: inline-block;
+    width: 1rem;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
 
 input,
 select,
@@ -1149,8 +1120,7 @@ table {
   table > tfoot > tr > td {
     padding: 12px;
     line-height: 1.2;
-    vertical-align: top;
-    border-top: 1px solid #333; }
+    vertical-align: top; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
@@ -1225,8 +1195,7 @@ table {
   table > tfoot > tr > td {
     padding: 12px;
     line-height: 1.2;
-    vertical-align: top;
-    border-top: 1px solid #333; }
+    vertical-align: top; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }

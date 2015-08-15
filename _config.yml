@@ -47,7 +47,6 @@ share_hackernews: true
 
 # Build settings
 highlighter: pygments
-pygments_options: ['lineanchors']
 markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']

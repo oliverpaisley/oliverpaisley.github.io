@@ -22,7 +22,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508151442" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508151605" type="text/css">
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -173,57 +173,57 @@
 
 <p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>sites <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Respiratory System&quot;</span><span class="p">,</span>
-<a name="True-2"></a>           <span class="s">&quot;Digestive System&quot;</span><span class="p">,</span>
-<a name="True-3"></a>           <span class="s">&quot;Prostate&quot;</span><span class="p">,</span>
-<a name="True-4"></a>           <span class="s">&quot;Female Breast&quot;</span><span class="p">,</span>
-<a name="True-5"></a>           <span class="s">&quot;Male Genital System&quot;</span><span class="p">,</span>
-<a name="True-6"></a>           <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">)</span>
-<a name="True-7"></a>
-<a name="True-8"></a>c1 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
-<a name="True-9"></a> filter<span class="p">(</span>site       <span class="o">%in%</span> sites
-<a name="True-10"></a>        year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
-<a name="True-11"></a>        sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
-<a name="True-12"></a>        race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
-<a name="True-13"></a>        event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
-<a name="True-14"></a>        count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
-<a name="True-15"></a>        count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
-<a name="True-16"></a>        count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
-<a name="True-17"></a> mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-18"></a> select<span class="p">(</span>year<span class="p">,</span>
-<a name="True-19"></a>        site<span class="p">,</span>
-<a name="True-20"></a>        rate<span class="p">)</span>
-<a name="True-21"></a>
-<a name="True-22"></a>c1<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c1<span class="o">$</span>rate<span class="p">,</span>
-<a name="True-23"></a>                 digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> sites <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Respiratory System&quot;</span><span class="p">,</span>
+<span class="lineno"> 2</span>            <span class="s">&quot;Digestive System&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>            <span class="s">&quot;Prostate&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>            <span class="s">&quot;Female Breast&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>            <span class="s">&quot;Male Genital System&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>            <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">)</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span> c1 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
+<span class="lineno"> 9</span>  filter<span class="p">(</span>site       <span class="o">%in%</span> sites
+<span class="lineno">10</span>         year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno">11</span>         sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno">12</span>         race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno">13</span>         event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno">14</span>         count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno">15</span>         count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno">16</span>         count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
+<span class="lineno">17</span>  mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">18</span>  select<span class="p">(</span>year<span class="p">,</span>
+<span class="lineno">19</span>         site<span class="p">,</span>
+<span class="lineno">20</span>         rate<span class="p">)</span>
+<span class="lineno">21</span> 
+<span class="lineno">22</span> c1<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c1<span class="o">$</span>rate<span class="p">,</span>
+<span class="lineno">23</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
 
 <p>Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s <code>nPlot</code> function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a><span class="c1"># Creating the NVD3 object.</span>
-<a name="True-2"></a>n1 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
-<a name="True-3"></a>            data  <span class="o">=</span> c1<span class="p">,</span>
-<a name="True-4"></a>            group <span class="o">=</span> <span class="s">&quot;site&quot;</span><span class="p">,</span>
-<a name="True-5"></a>            type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
-<a name="True-6"></a>
-<a name="True-7"></a><span class="c1"># Cleaning up the axes.</span>
-<a name="True-8"></a>n1<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<a name="True-9"></a>         axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
-<a name="True-10"></a>         width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
-<a name="True-11"></a>n1<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
-<a name="True-12"></a>
-<a name="True-13"></a><span class="c1"># Setting up which features are selected by default.</span>
-<a name="True-14"></a>disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c1<span class="o">$</span>site<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span>
-<a name="True-15"></a>n1<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
-<a name="True-16"></a>
-<a name="True-17"></a><span class="c1"># Changing the color of the lines.</span>
-<a name="True-18"></a>n1<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span>
-<a name="True-19"></a>                   brewer.pal<span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">)))</span>
-<a name="True-20"></a>
-<a name="True-21"></a><span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<a name="True-22"></a>n1<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
-<a name="True-23"></a><span class="s">         return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
-<a name="True-24"></a><span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
-<a name="True-25"></a><span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
+<span class="lineno"> 2</span> n1 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
+<span class="lineno"> 3</span>             data  <span class="o">=</span> c1<span class="p">,</span>
+<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">&quot;site&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="c1"># Cleaning up the axes.</span>
+<span class="lineno"> 8</span> n1<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
+<span class="lineno">10</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
+<span class="lineno">11</span> n1<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
+<span class="lineno">12</span> 
+<span class="lineno">13</span> <span class="c1"># Setting up which features are selected by default.</span>
+<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c1<span class="o">$</span>site<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span>
+<span class="lineno">15</span> n1<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> <span class="c1"># Changing the color of the lines.</span>
+<span class="lineno">18</span> n1<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="lineno">19</span>                    brewer.pal<span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">)))</span>
+<span class="lineno">20</span> 
+<span class="lineno">21</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
+<span class="lineno">22</span> n1<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">23</span> <span class="s">         return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">24</span> <span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">25</span> <span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
 
 <p>If you are using <a href="https://www.rstudio.com/">RStudio</a>, you can just type <code>n1</code> to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.</p>
 
@@ -233,107 +233,107 @@
 
 <p>Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>c2 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
-<a name="True-2"></a>  filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
-<a name="True-3"></a>         year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
-<a name="True-4"></a>         race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
-<a name="True-5"></a>         event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
-<a name="True-6"></a>         count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
-<a name="True-7"></a>         count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
-<a name="True-8"></a>         count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-9"></a>  mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-10"></a>  select<span class="p">(</span>year<span class="p">,</span>
-<a name="True-11"></a>         sex<span class="p">,</span>
-<a name="True-12"></a>         rate<span class="p">)</span>
-<a name="True-13"></a>
-<a name="True-14"></a>c2<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c2<span class="o">$</span>rate<span class="p">,</span>
-<a name="True-15"></a>                 digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c2 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
+<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno"> 9</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">10</span>   select<span class="p">(</span>year<span class="p">,</span>
+<span class="lineno">11</span>          sex<span class="p">,</span>
+<span class="lineno">12</span>          rate<span class="p">)</span>
+<span class="lineno">13</span> 
+<span class="lineno">14</span> c2<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c2<span class="o">$</span>rate<span class="p">,</span>
+<span class="lineno">15</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
 
 <p>Now we use rCharts to create and customize our graph.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a><span class="c1"># Creating the NVD3 object.</span>
-<a name="True-2"></a>n2 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
-<a name="True-3"></a>            data  <span class="o">=</span> c2<span class="p">,</span>
-<a name="True-4"></a>            group <span class="o">=</span> <span class="s">&quot;sex&quot;</span><span class="p">,</span>
-<a name="True-5"></a>            type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
-<a name="True-6"></a>
-<a name="True-7"></a><span class="c1"># Cleaning up the axes.</span>
-<a name="True-8"></a>n2<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<a name="True-9"></a>         axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
-<a name="True-10"></a>         width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
-<a name="True-11"></a>n2<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
-<a name="True-12"></a>
-<a name="True-13"></a><span class="c1"># Setting up which features are selected by default.</span>
-<a name="True-14"></a>disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c2<span class="o">$</span>sex<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span>
-<a name="True-15"></a>n2<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
-<a name="True-16"></a>
-<a name="True-17"></a><span class="c1"># Changing the color of the lines.</span>
-<a name="True-18"></a>n2<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;hotpink&quot;</span><span class="p">,</span>
-<a name="True-19"></a>                   <span class="s">&quot;blue&quot;</span><span class="p">,</span>
-<a name="True-20"></a>                   <span class="s">&quot;black&quot;</span><span class="p">))</span>
-<a name="True-21"></a>
-<a name="True-22"></a><span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<a name="True-23"></a>n2<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
-<a name="True-24"></a><span class="s">        return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
-<a name="True-25"></a><span class="s">              &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
-<a name="True-26"></a><span class="s">              } !#&quot;</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
+<span class="lineno"> 2</span> n2 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
+<span class="lineno"> 3</span>             data  <span class="o">=</span> c2<span class="p">,</span>
+<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">&quot;sex&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="c1"># Cleaning up the axes.</span>
+<span class="lineno"> 8</span> n2<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
+<span class="lineno">10</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
+<span class="lineno">11</span> n2<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
+<span class="lineno">12</span> 
+<span class="lineno">13</span> <span class="c1"># Setting up which features are selected by default.</span>
+<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c2<span class="o">$</span>sex<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span>
+<span class="lineno">15</span> n2<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> <span class="c1"># Changing the color of the lines.</span>
+<span class="lineno">18</span> n2<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;hotpink&quot;</span><span class="p">,</span>
+<span class="lineno">19</span>                    <span class="s">&quot;blue&quot;</span><span class="p">,</span>
+<span class="lineno">20</span>                    <span class="s">&quot;black&quot;</span><span class="p">))</span>
+<span class="lineno">21</span> 
+<span class="lineno">22</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
+<span class="lineno">23</span> n2<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">24</span> <span class="s">        return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">25</span> <span class="s">              &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">26</span> <span class="s">              } !#&quot;</span><span class="p">)</span></code></pre></div>
 
 <p>Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>age_data<span class="o">$</span>age <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>age_data<span class="o">$</span>age<span class="p">,</span>
-<a name="True-2"></a>                       levels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&lt;1&quot;</span><span class="p">,</span> <span class="s">&quot;1-4&quot;</span><span class="p">,</span> <span class="s">&quot;5-9&quot;</span><span class="p">,</span> <span class="s">&quot;10-14&quot;</span><span class="p">,</span> <span class="s">&quot;15-19&quot;</span><span class="p">,</span> <span class="s">&quot;20-24&quot;</span><span class="p">,</span>
-<a name="True-3"></a>                                  <span class="s">&quot;25-29&quot;</span><span class="p">,</span> <span class="s">&quot;30-34&quot;</span><span class="p">,</span> <span class="s">&quot;35-39&quot;</span><span class="p">,</span> <span class="s">&quot;40-44&quot;</span><span class="p">,</span> <span class="s">&quot;45-49&quot;</span><span class="p">,</span>
-<a name="True-4"></a>                                  <span class="s">&quot;50-54&quot;</span><span class="p">,</span> <span class="s">&quot;55-59&quot;</span><span class="p">,</span> <span class="s">&quot;60-64&quot;</span><span class="p">,</span> <span class="s">&quot;65-69&quot;</span><span class="p">,</span> <span class="s">&quot;70-74&quot;</span><span class="p">,</span>
-<a name="True-5"></a>                                  <span class="s">&quot;75-79&quot;</span><span class="p">,</span> <span class="s">&quot;80-84&quot;</span><span class="p">,</span> <span class="s">&quot;85+&quot;</span><span class="p">),</span>
-<a name="True-6"></a>                       ordered <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno">1</span> age_data<span class="o">$</span>age <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>age_data<span class="o">$</span>age<span class="p">,</span>
+<span class="lineno">2</span>                        levels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&lt;1&quot;</span><span class="p">,</span> <span class="s">&quot;1-4&quot;</span><span class="p">,</span> <span class="s">&quot;5-9&quot;</span><span class="p">,</span> <span class="s">&quot;10-14&quot;</span><span class="p">,</span> <span class="s">&quot;15-19&quot;</span><span class="p">,</span> <span class="s">&quot;20-24&quot;</span><span class="p">,</span>
+<span class="lineno">3</span>                                   <span class="s">&quot;25-29&quot;</span><span class="p">,</span> <span class="s">&quot;30-34&quot;</span><span class="p">,</span> <span class="s">&quot;35-39&quot;</span><span class="p">,</span> <span class="s">&quot;40-44&quot;</span><span class="p">,</span> <span class="s">&quot;45-49&quot;</span><span class="p">,</span>
+<span class="lineno">4</span>                                   <span class="s">&quot;50-54&quot;</span><span class="p">,</span> <span class="s">&quot;55-59&quot;</span><span class="p">,</span> <span class="s">&quot;60-64&quot;</span><span class="p">,</span> <span class="s">&quot;65-69&quot;</span><span class="p">,</span> <span class="s">&quot;70-74&quot;</span><span class="p">,</span>
+<span class="lineno">5</span>                                   <span class="s">&quot;75-79&quot;</span><span class="p">,</span> <span class="s">&quot;80-84&quot;</span><span class="p">,</span> <span class="s">&quot;85+&quot;</span><span class="p">),</span>
+<span class="lineno">6</span>                        ordered <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
 
 <p>Now we can move on to using dplyr and rCharts, and everything comes out as expected.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>c4 <span class="o">&lt;-</span> age_data <span class="o">%&gt;%</span>
-<a name="True-2"></a>  filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
-<a name="True-3"></a>         year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
-<a name="True-4"></a>         sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
-<a name="True-5"></a>         race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
-<a name="True-6"></a>         event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
-<a name="True-7"></a>         count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
-<a name="True-8"></a>         count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
-<a name="True-9"></a>         count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
-<a name="True-10"></a>  mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-11"></a>  select<span class="p">(</span>year<span class="p">,</span>
-<a name="True-12"></a>         age<span class="p">,</span>
-<a name="True-13"></a>         rate<span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-14"></a>  arrange<span class="p">(</span>year<span class="p">,</span>
-<a name="True-15"></a>          age<span class="p">)</span>
-<a name="True-16"></a>
-<a name="True-17"></a>c4<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c4<span class="o">$</span>rate<span class="p">,</span>
-<a name="True-18"></a>                 digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
-<a name="True-19"></a>
-<a name="True-20"></a><span class="c1"># Creating the NVD3 object.</span>
-<a name="True-21"></a>n4 <span class="o">&lt;-</span> nPlot<span class="p">(</span>rate <span class="o">~</span> age<span class="p">,</span>
-<a name="True-22"></a>            data  <span class="o">=</span> c4<span class="p">,</span>
-<a name="True-23"></a>            group <span class="o">=</span> <span class="s">&quot;year&quot;</span><span class="p">,</span>
-<a name="True-24"></a>            type  <span class="o">=</span> <span class="s">&quot;multiBarChart&quot;</span><span class="p">)</span>
-<a name="True-25"></a>
-<a name="True-26"></a><span class="c1"># Cleaning up the axes.</span>
-<a name="True-27"></a>n4<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<a name="True-28"></a>         axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
-<a name="True-29"></a>         width      <span class="o">=</span> <span class="m">47</span><span class="p">,</span>
-<a name="True-30"></a>         tickFormat <span class="o">=</span> <span class="s">&quot;#! function(d) {return d} !#&quot;</span><span class="p">)</span>
-<a name="True-31"></a>n4<span class="o">$</span>xAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<a name="True-32"></a>         axisLabel  <span class="o">=</span> <span class="s">&quot;Age&quot;</span><span class="p">)</span>
-<a name="True-33"></a>
-<a name="True-34"></a><span class="c1"># Setting up which features are selected by default.</span>
-<a name="True-35"></a>keep_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c4<span class="o">$</span>year<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;2011&quot;</span>
-<a name="True-36"></a>n4<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> <span class="o">!</span>keep_these<span class="p">)</span>
-<a name="True-37"></a>
-<a name="True-38"></a><span class="c1"># Changing the color of the lines.</span>
-<a name="True-39"></a>n4<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> colorRampPalette<span class="p">(</span>brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">))(</span><span class="m">13</span><span class="p">))</span>
-<a name="True-40"></a>
-<a name="True-41"></a><span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<a name="True-42"></a>n4<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
-<a name="True-43"></a><span class="s">        return &#39;&lt;h3&gt;&#39; + x + &#39;&lt;/h3&gt;&#39; +</span>
-<a name="True-44"></a><span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + key + &#39;&lt;/p&gt;&#39;</span>
-<a name="True-45"></a><span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c4 <span class="o">&lt;-</span> age_data <span class="o">%&gt;%</span>
+<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
+<span class="lineno">10</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">11</span>   select<span class="p">(</span>year<span class="p">,</span>
+<span class="lineno">12</span>          age<span class="p">,</span>
+<span class="lineno">13</span>          rate<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">14</span>   arrange<span class="p">(</span>year<span class="p">,</span>
+<span class="lineno">15</span>           age<span class="p">)</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> c4<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c4<span class="o">$</span>rate<span class="p">,</span>
+<span class="lineno">18</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+<span class="lineno">19</span> 
+<span class="lineno">20</span> <span class="c1"># Creating the NVD3 object.</span>
+<span class="lineno">21</span> n4 <span class="o">&lt;-</span> nPlot<span class="p">(</span>rate <span class="o">~</span> age<span class="p">,</span>
+<span class="lineno">22</span>             data  <span class="o">=</span> c4<span class="p">,</span>
+<span class="lineno">23</span>             group <span class="o">=</span> <span class="s">&quot;year&quot;</span><span class="p">,</span>
+<span class="lineno">24</span>             type  <span class="o">=</span> <span class="s">&quot;multiBarChart&quot;</span><span class="p">)</span>
+<span class="lineno">25</span> 
+<span class="lineno">26</span> <span class="c1"># Cleaning up the axes.</span>
+<span class="lineno">27</span> n4<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+<span class="lineno">28</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
+<span class="lineno">29</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">,</span>
+<span class="lineno">30</span>          tickFormat <span class="o">=</span> <span class="s">&quot;#! function(d) {return d} !#&quot;</span><span class="p">)</span>
+<span class="lineno">31</span> n4<span class="o">$</span>xAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
+<span class="lineno">32</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Age&quot;</span><span class="p">)</span>
+<span class="lineno">33</span> 
+<span class="lineno">34</span> <span class="c1"># Setting up which features are selected by default.</span>
+<span class="lineno">35</span> keep_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c4<span class="o">$</span>year<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;2011&quot;</span>
+<span class="lineno">36</span> n4<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> <span class="o">!</span>keep_these<span class="p">)</span>
+<span class="lineno">37</span> 
+<span class="lineno">38</span> <span class="c1"># Changing the color of the lines.</span>
+<span class="lineno">39</span> n4<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> colorRampPalette<span class="p">(</span>brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">))(</span><span class="m">13</span><span class="p">))</span>
+<span class="lineno">40</span> 
+<span class="lineno">41</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
+<span class="lineno">42</span> n4<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">43</span> <span class="s">        return &#39;&lt;h3&gt;&#39; + x + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">44</span> <span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + key + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">45</span> <span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
 
 <p>I would like to end this post by thanking <a href="http://ramnathv.github.io/">Ramnath Vaidyanathan</a> for all the work he has put into rCharts.</p>
 

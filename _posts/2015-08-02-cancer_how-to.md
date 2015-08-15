@@ -63,7 +63,7 @@ site_data %>%
 
 Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include "All Cancer Sites Combined" for comparison purposes.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 sites <- c("Respiratory System",
            "Digestive System",
            "Prostate",
@@ -91,7 +91,7 @@ c1$rate <- round(c1$rate,
 
 Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart's `nPlot` function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 # Creating the NVD3 object.
 n1 <- nPlot(norm_count ~ year,
             data  = c1,
@@ -127,7 +127,7 @@ Information on how to do these things is available on the [documentation for rCh
 
 Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 c2 <- site_data %>%
   filter(site       == "All Cancer Sites Combined",
          year       != "2007-2011",
@@ -147,7 +147,7 @@ c2$rate <- round(c2$rate,
 
 Now we use rCharts to create and customize our graph.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 # Creating the NVD3 object.
 n2 <- nPlot(norm_count ~ year,
             data  = c2,
@@ -178,7 +178,7 @@ n2$chart(tooltipContent = "#! function(key, x, y){
 
 Creating a graph to compare races is almost exactly the same as the above code. Just replace "sex" with "race". Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 age_data$age <- factor(age_data$age,
                        levels = c("<1", "1-4", "5-9", "10-14", "15-19", "20-24",
                                   "25-29", "30-34", "35-39", "40-44", "45-49",
@@ -189,7 +189,7 @@ age_data$age <- factor(age_data$age,
 
 Now we can move on to using dplyr and rCharts, and everything comes out as expected.
 
-{% highlight r lineanchors %}
+{% highlight r linenos %}
 c4 <- age_data %>%
   filter(site       == "All Cancer Sites Combined",
          year       != "2007-2011",
