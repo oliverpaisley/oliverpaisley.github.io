@@ -9,8 +9,8 @@
       <item>
         <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</title>
         <description>&lt;ul&gt;
-&lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/visuals/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
+  &lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/visuals/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Our goal is to create an interactive graph of cancer rates in the United States.&lt;/p&gt;
@@ -57,7 +57,7 @@
 &lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;          site&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
 &lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;kp&quot;&gt;tail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include &amp;ldquo;All Cancer Sites Combined&amp;rdquo; for comparison purposes.&lt;/p&gt;
+&lt;p&gt;Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;sites &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Respiratory System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 &lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;           &lt;span class=&quot;s&quot;&gt;&amp;quot;Digestive System&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -83,7 +83,7 @@
 &lt;a name=&quot;True-22&quot;&gt;&lt;/a&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;c1&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;rate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 &lt;a name=&quot;True-23&quot;&gt;&lt;/a&gt;                 digits &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart&amp;rsquo;s &lt;code&gt;nPlot&lt;/code&gt; function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.&lt;/p&gt;
+&lt;p&gt;Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s &lt;code&gt;nPlot&lt;/code&gt; function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;c1&quot;&gt;# Creating the NVD3 object.&lt;/span&gt;
 &lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;n1 &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; nPlot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;norm_count &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
@@ -164,7 +164,7 @@
 &lt;a name=&quot;True-25&quot;&gt;&lt;/a&gt;&lt;span class=&quot;s&quot;&gt;              &amp;#39;&amp;lt;p&amp;gt;&amp;#39; + y + &amp;#39; per 100,000 diagnosed in &amp;#39; + x + &amp;#39;&amp;lt;/p&amp;gt;&amp;#39;&lt;/span&gt;
 &lt;a name=&quot;True-26&quot;&gt;&lt;/a&gt;&lt;span class=&quot;s&quot;&gt;              } !#&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Creating a graph to compare races is almost exactly the same as the above code. Just replace &amp;ldquo;sex&amp;rdquo; with &amp;ldquo;race&amp;rdquo;. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.&lt;/p&gt;
+&lt;p&gt;Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;age&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
 &lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;                       levels &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;1-4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;5-9&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;10-14&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;15-19&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;20-24&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;

@@ -70,6 +70,8 @@ pre a:only-of-type::before {
 }
 
 .lineno {
+  content: counter(line-numbering);
+  counter-increment: line-numbering;
   width: 25px;
   text-align: left;
   opacity: 0.7;

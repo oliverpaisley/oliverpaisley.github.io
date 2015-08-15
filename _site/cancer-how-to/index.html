@@ -22,7 +22,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508150558" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508151442" type="text/css">
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -123,8 +123,8 @@
 </div>
 <article class="post-content">
   <ul>
-<li>This post is an explanation on how I created the graphs <a href="/visuals/cancer/">here</a>.</li>
-<li>It is assumed that basic knowledge of <a href="https://www.r-project.org/">R</a> is known.</li>
+  <li>This post is an explanation on how I created the graphs <a href="/visuals/cancer/">here</a>.</li>
+  <li>It is assumed that basic knowledge of <a href="https://www.r-project.org/">R</a> is known.</li>
 </ul>
 
 <p>Our goal is to create an interactive graph of cancer rates in the United States.</p>
@@ -171,7 +171,7 @@
 <span class="lineno">13</span>          site<span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">14</span>   <span class="kp">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span></code></pre></div>
 
-<p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include &ldquo;All Cancer Sites Combined&rdquo; for comparison purposes.</p>
+<p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>sites <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Respiratory System&quot;</span><span class="p">,</span>
 <a name="True-2"></a>           <span class="s">&quot;Digestive System&quot;</span><span class="p">,</span>
@@ -197,7 +197,7 @@
 <a name="True-22"></a>c1<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c1<span class="o">$</span>rate<span class="p">,</span>
 <a name="True-23"></a>                 digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
 
-<p>Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart&rsquo;s <code>nPlot</code> function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.</p>
+<p>Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s <code>nPlot</code> function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a><span class="c1"># Creating the NVD3 object.</span>
 <a name="True-2"></a>n1 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
@@ -278,7 +278,7 @@
 <a name="True-25"></a><span class="s">              &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
 <a name="True-26"></a><span class="s">              } !#&quot;</span><span class="p">)</span></code></pre></div>
 
-<p>Creating a graph to compare races is almost exactly the same as the above code. Just replace &ldquo;sex&rdquo; with &ldquo;race&rdquo;. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.</p>
+<p>Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.</p>
 
 <div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a>age_data<span class="o">$</span>age <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>age_data<span class="o">$</span>age<span class="p">,</span>
 <a name="True-2"></a>                       levels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&lt;1&quot;</span><span class="p">,</span> <span class="s">&quot;1-4&quot;</span><span class="p">,</span> <span class="s">&quot;5-9&quot;</span><span class="p">,</span> <span class="s">&quot;10-14&quot;</span><span class="p">,</span> <span class="s">&quot;15-19&quot;</span><span class="p">,</span> <span class="s">&quot;20-24&quot;</span><span class="p">,</span>
