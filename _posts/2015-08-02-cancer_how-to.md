@@ -19,7 +19,7 @@ There are 12 years worth of data available from the Centers of Disease Control a
 
 After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using [dplyr](https://github.com/hadley/dplyr) to process the data, [rCharts](http://rcharts.io/) to create the graphs, and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html) for pretty colors.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
@@ -44,7 +44,7 @@ Our first task is to create a graph where the x-axis is time (1999 to 2011), the
 
 Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 # Change year to 2011 to see how they compare.
 site_data %>%
   filter(year       == "1999",
@@ -63,7 +63,7 @@ site_data %>%
 
 Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include "All Cancer Sites Combined" for comparison purposes.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 sites <- c("Respiratory System",
            "Digestive System",
            "Prostate",
@@ -91,7 +91,7 @@ c1$rate <- round(c1$rate,
 
 Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart's `nPlot` function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 # Creating the NVD3 object.
 n1 <- nPlot(norm_count ~ year,
             data  = c1,
@@ -127,7 +127,7 @@ Information on how to do these things is available on the [documentation for rCh
 
 Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 c2 <- site_data %>%
   filter(site       == "All Cancer Sites Combined",
          year       != "2007-2011",
@@ -147,7 +147,7 @@ c2$rate <- round(c2$rate,
 
 Now we use rCharts to create and customize our graph.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 # Creating the NVD3 object.
 n2 <- nPlot(norm_count ~ year,
             data  = c2,
@@ -178,7 +178,7 @@ n2$chart(tooltipContent = "#! function(key, x, y){
 
 Creating a graph to compare races is almost exactly the same as the above code. Just replace "sex" with "race". Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 age_data$age <- factor(age_data$age,
                        levels = c("<1", "1-4", "5-9", "10-14", "15-19", "20-24",
                                   "25-29", "30-34", "35-39", "40-44", "45-49",
@@ -189,7 +189,7 @@ age_data$age <- factor(age_data$age,
 
 Now we can move on to using dplyr and rCharts, and everything comes out as expected.
 
-{% highlight r %}
+{% highlight r lineanchors %}
 c4 <- age_data %>%
   filter(site       == "All Cancer Sites Combined",
          year       != "2007-2011",

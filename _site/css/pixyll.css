@@ -941,15 +941,12 @@ pre,
 code {
   font-family: "Source Code Pro", Consolas, monospace; }
 
-code {
-  color: #7a7a7a; }
-
 pre {
   padding: 1.125em;
   line-height: 1.11;
   overflow-x: scroll;
   margin-bottom: 0.88em;
-  background-color: #fafafa; }
+  background-color: #f1f1f1; }
 
 .highlight .p {
   font-size: 1.125rem;
@@ -965,30 +962,34 @@ pre {
 pre a::before {
   content: counter(line-numbering);
   counter-increment: line-numbering;
-  padding-right: 1em;
+  margin-right: 1em;
   /* space after numbers */
   width: 25px;
-  text-align: right;
+  text-align: left;
   opacity: 0.7;
   display: inline-block;
-  color: #ccc;
-  margin-right: 16px;
+  color: #777;
   font-size: 13px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; }
+  user-select: none;
+  padding-top: 4px;
+  border-right: 1px solid #333; }
 
 pre a:first-of-type::before {
-  padding-top: 10px; }
+  padding-top: 7px; }
 
 pre a:last-of-type::before {
-  padding-bottom: 10px; }
+  padding-bottom: 7px; }
 
 pre a:only-of-type::before {
   padding: 10px; }
+
+.highlight a {
+  border: 0px; }
 
 input,
 select,
