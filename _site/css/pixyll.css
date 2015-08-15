@@ -1125,10 +1125,8 @@ table {
   table > tbody > tr > td,
   table > tfoot > tr > th,
   table > tfoot > tr > td {
-    padding: 12px;
     line-height: 1.2;
-    vertical-align: top;
-    border-top: 1px solid #333; }
+    vertical-align: top; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
@@ -1141,6 +1139,9 @@ table {
     border-top: 0; }
   table > tbody + tbody {
     border-top: 2px solid #333; }
+
+td.linenos {
+  border-right: 1px solid #333; }
 
 /*!
 Animate.css - http://daneden.me/animate
@@ -1201,10 +1202,8 @@ table {
   table > tbody > tr > td,
   table > tfoot > tr > th,
   table > tfoot > tr > td {
-    padding: 12px;
     line-height: 1.2;
-    vertical-align: top;
-    border-top: 1px solid #333; }
+    vertical-align: top; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
@@ -1217,6 +1216,9 @@ table {
     border-top: 0; }
   table > tbody + tbody {
     border-top: 2px solid #333; }
+
+td.linenos {
+  border-right: 1px solid #333; }
 
 .site {
   display: flex;
