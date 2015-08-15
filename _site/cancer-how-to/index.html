@@ -22,7 +22,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201508150513" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201508150558" type="text/css">
 
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -133,39 +133,22 @@
 
 <p>After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using <a href="https://github.com/hadley/dplyr">dplyr</a> to process the data, <a href="http://rcharts.io/">rCharts</a> to create the graphs, and <a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a> for pretty colors.</p>
 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><code class="language-r" data-lang="r"> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16</code></pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>rCharts<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">)</span>
-
-site_data <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYSITE.TXT&quot;</span><span class="p">,</span>
-                        sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
-                        header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
-                        stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-
-age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYAGE.TXT&quot;</span><span class="p">,</span>
-                        sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
-                        header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
-                        stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-
-<span class="kp">names</span><span class="p">(</span>age_data<span class="p">)</span>  <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>age_data<span class="p">))</span>
-<span class="kp">names</span><span class="p">(</span>site_data<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>site_data<span class="p">))</span>
-</pre></div>
-</td></tr></table>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
+<span class="lineno"> 2</span> <span class="kn">library</span><span class="p">(</span>rCharts<span class="p">)</span>
+<span class="lineno"> 3</span> <span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">)</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> site_data <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYSITE.TXT&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>                         sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
+<span class="lineno"> 7</span>                         header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+<span class="lineno"> 8</span>                         stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYAGE.TXT&quot;</span><span class="p">,</span>
+<span class="lineno">11</span>                         sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
+<span class="lineno">12</span>                         header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+<span class="lineno">13</span>                         stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="lineno">14</span> 
+<span class="lineno">15</span> <span class="kp">names</span><span class="p">(</span>age_data<span class="p">)</span>  <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>age_data<span class="p">))</span>
+<span class="lineno">16</span> <span class="kp">names</span><span class="p">(</span>site_data<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>site_data<span class="p">))</span></code></pre></div>
 
 <p>We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize <a href="http://d3js.org/">D3.js</a>. The JavaScript library we will be connecting to is <a href="http://nvd3.org/">NVD3</a>.</p>
 
@@ -173,20 +156,20 @@ age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span c
 
 <p>Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.</p>
 
-<div class="highlight"><pre><code class="language-r" data-lang="r"><a name="True-1"></a><span class="c1"># Change year to 2011 to see how they compare.</span>
-<a name="True-2"></a>site_data <span class="o">%&gt;%</span>
-<a name="True-3"></a>  filter<span class="p">(</span>year       <span class="o">==</span> <span class="s">&quot;1999&quot;</span><span class="p">,</span>
-<a name="True-4"></a>         sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
-<a name="True-5"></a>         race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
-<a name="True-6"></a>         event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
-<a name="True-7"></a>         count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
-<a name="True-8"></a>         count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
-<a name="True-9"></a>         count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-10"></a>  mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-11"></a>  arrange<span class="p">(</span>rate<span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-12"></a>  select<span class="p">(</span>year<span class="p">,</span>
-<a name="True-13"></a>         site<span class="p">)</span> <span class="o">%&gt;%</span>
-<a name="True-14"></a>  <span class="kp">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Change year to 2011 to see how they compare.</span>
+<span class="lineno"> 2</span> site_data <span class="o">%&gt;%</span>
+<span class="lineno"> 3</span>   filter<span class="p">(</span>year       <span class="o">==</span> <span class="s">&quot;1999&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">10</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">11</span>   arrange<span class="p">(</span>rate<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">12</span>   select<span class="p">(</span>year<span class="p">,</span>
+<span class="lineno">13</span>          site<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">14</span>   <span class="kp">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span></code></pre></div>
 
 <p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include &ldquo;All Cancer Sites Combined&rdquo; for comparison purposes.</p>
 

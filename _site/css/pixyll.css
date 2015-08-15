@@ -991,6 +991,26 @@ pre a:only-of-type::before {
 .highlight a {
   border: 0px; }
 
+.lineno {
+  width: 25px;
+  text-align: left;
+  opacity: 0.7;
+  display: inline-block;
+  color: #777;
+  font-size: 13px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-top: 4px;
+  border-right: 1px solid #333;
+  margin: 0px;
+  padding-right: 10px;
+  margin-right: 10px;
+  margin-left: -10px; }
+
 input,
 select,
 textarea,
@@ -1125,8 +1145,10 @@ table {
   table > tbody > tr > td,
   table > tfoot > tr > th,
   table > tfoot > tr > td {
+    padding: 12px;
     line-height: 1.2;
-    vertical-align: top; }
+    vertical-align: top;
+    border-top: 1px solid #333; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
@@ -1139,9 +1161,6 @@ table {
     border-top: 0; }
   table > tbody + tbody {
     border-top: 2px solid #333; }
-
-td.linenos {
-  border-right: 1px solid #333; }
 
 /*!
 Animate.css - http://daneden.me/animate
@@ -1202,8 +1221,10 @@ table {
   table > tbody > tr > td,
   table > tfoot > tr > th,
   table > tfoot > tr > td {
+    padding: 12px;
     line-height: 1.2;
-    vertical-align: top; }
+    vertical-align: top;
+    border-top: 1px solid #333; }
   table > thead > tr > th {
     vertical-align: bottom;
     border-bottom: 2px solid #333; }
@@ -1216,9 +1237,6 @@ table {
     border-top: 0; }
   table > tbody + tbody {
     border-top: 2px solid #333; }
-
-td.linenos {
-  border-right: 1px solid #333; }
 
 .site {
   display: flex;
