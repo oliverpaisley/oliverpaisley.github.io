@@ -19,22 +19,39 @@
 
 &lt;p&gt;After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using &lt;a href=&quot;https://github.com/hadley/dplyr&quot;&gt;dplyr&lt;/a&gt; to process the data, &lt;a href=&quot;http://rcharts.io/&quot;&gt;rCharts&lt;/a&gt; to create the graphs, and &lt;a href=&quot;https://cran.r-project.org/web/packages/RColorBrewer/index.html&quot;&gt;RColorBrewer&lt;/a&gt; for pretty colors.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;dplyr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rCharts&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;RColorBrewer&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;a name=&quot;True-4&quot;&gt;&lt;/a&gt;
-&lt;a name=&quot;True-5&quot;&gt;&lt;/a&gt;site_data &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYSITE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-6&quot;&gt;&lt;/a&gt;                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-7&quot;&gt;&lt;/a&gt;                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-8&quot;&gt;&lt;/a&gt;                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;a name=&quot;True-9&quot;&gt;&lt;/a&gt;
-&lt;a name=&quot;True-10&quot;&gt;&lt;/a&gt;age_data  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYAGE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-11&quot;&gt;&lt;/a&gt;                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-12&quot;&gt;&lt;/a&gt;                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-&lt;a name=&quot;True-13&quot;&gt;&lt;/a&gt;                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;a name=&quot;True-14&quot;&gt;&lt;/a&gt;
-&lt;a name=&quot;True-15&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;a name=&quot;True-16&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;table class=&quot;highlighttable&quot;&gt;&lt;tr&gt;&lt;td class=&quot;linenos&quot;&gt;&lt;div class=&quot;linenodiv&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;dplyr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rCharts&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;RColorBrewer&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+site_data &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYSITE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+age_data  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read.table&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;BYAGE.TXT&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        sep              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;|&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        header           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                        stringsAsFactors &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;age_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;tolower&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;site_data&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize &lt;a href=&quot;http://d3js.org/&quot;&gt;D3.js&lt;/a&gt;. The JavaScript library we will be connecting to is &lt;a href=&quot;http://nvd3.org/&quot;&gt;NVD3&lt;/a&gt;.&lt;/p&gt;
 

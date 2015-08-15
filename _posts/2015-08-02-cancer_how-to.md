@@ -19,7 +19,7 @@ There are 12 years worth of data available from the Centers of Disease Control a
 
 After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using [dplyr](https://github.com/hadley/dplyr) to process the data, [rCharts](http://rcharts.io/) to create the graphs, and [RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html) for pretty colors.
 
-{% highlight r lineanchors %}
+{% highlight r linenos=table %}
 library(dplyr)
 library(rCharts)
 library(RColorBrewer)
