@@ -45,16 +45,14 @@ code {
         padding-right: 10px;
         margin-right: 5px;
         padding-top: 3px;
-        padding-bottom: 2px;
+        padding-bottom: 3px;
         border-right: 1px solid #333;
-        font-size: 0.8rem;                 // use rem since the em would be relative to 0 font-size above
+        font-size: 0.8rem;               // use rem since the em would be relative to 0 font-size above
         content: "" counter(linenumber); // display the current line number count (
         counter-increment: linenumber;   // increment the line number each time it's rendered
         visibility: visible;             // override parent's hidden
         display: inline-block;           // so we can specify a width
         width: 1rem;                     // give us enough width to pad the line number
-                                         // should work unless I decide to blog over 1000 lines
-                                         // ... which I don't plan on doing anyways
        -webkit-touch-callout: none;
        -webkit-user-select: none;
        -khtml-user-select: none;
