@@ -3,7 +3,7 @@ layout: page
 title: About Me
 permalink: /about-me/
 ---
-<div style="text-align: center; padding-top: 15px; padding-bottom: 15px;">
+<div style="text-align: center; padding-top: 15px; padding-bottom: 29.4px;">
   <img src="/pics/1.JPG" width="100" height="133">
   <img src="/pics/2.JPG" width="100" height="133">
   <img src="/pics/3.JPG" width="100" height="133">
