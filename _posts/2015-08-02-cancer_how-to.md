@@ -9,6 +9,7 @@ tags:
   -R
   -dplyr
   -rCharts
+  -Cancer
 ---
 
 * This post is an explanation on how I created the graphs [here](/visuals/cancer/).
