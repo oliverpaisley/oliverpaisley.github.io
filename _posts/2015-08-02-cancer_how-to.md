@@ -12,8 +12,6 @@ tags:
   -Cancer
 ---
 
-test
-
 * This post is an explanation on how I created the graphs [here](/visuals/cancer/).
 * It is assumed that basic knowledge of [R](https://www.r-project.org/) is known.
 

@@ -12,7 +12,7 @@ var gulp         = require('gulp'),
     server       = lr();
 
 gulp.task('sass', function() {
-  return gulp.src('sass/style.scss')
+  return gulp.src('sass/**/*.scss')
     .pipe(sass())
     .pipe(autoprefixer( 'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4' ))
     .pipe(minifycss())
@@ -22,7 +22,7 @@ gulp.task('sass', function() {
     .pipe(livereload(server));
 });
 
-gulp.task('build', ['sass'], shell.task([ 'jekyll serve' ]));
+gulp.task('build', ['sass'], shell.task([ 'jekyll build --watch' ]));
 
 // Watch and rebuild on change
 gulp.task('default', function() {
