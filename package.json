@@ -1,0 +1,37 @@
+{
+  "name": "observabledata",
+  "version": "1.0.0",
+  "author": "Oliver Paisley",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "gulp": "*",
+    "gulp-ruby-sass": "*",
+    "gulp-util": "*",
+    "gulp-rename": "*",
+    "map-stream": "*",
+    "gulp-livereload": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-watch": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-imagemin": "*",
+    "gulp-jekyll": "*",
+    "gulp-jshint": "*",
+    "gulp-gh-pages": "*",
+    "gulp-minify-css": "*",
+    "gulp-connect": "*",
+    "gulp-bower": "*",
+    "gulp-plumber": "*",
+    "gulp-debug": "*",
+    "express": "*",
+    "gulp-sass": "*",
+    "gulp-shell": "*",
+    "tiny-lr": "*"
+  },
+  "devDependencies": {
+    "gulp-livereload": "^3.8.0"
+  }
+}

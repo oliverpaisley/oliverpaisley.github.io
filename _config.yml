@@ -56,3 +56,9 @@ sass:
   compressed: true
 gems:
   - jekyll-sitemap
+
+exclude:
+    - _sass
+    - node_modules
+    - gulpfile.js
+    - package.json
