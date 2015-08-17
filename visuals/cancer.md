@@ -12,7 +12,7 @@ tags:
 
 {{ page.summary }}
 
-* An explanation of how these visuals were created is available [here](/cancer-how-to/)
+* An explanation of how these visuals were created is available [here](/cancer-how-to/).
 * The data is available from the [Centers of Disease Control and Prevention](http://www.cdc.gov/cancer/npcr/uscs/download_data.htm).
 * The data represents incidence rates (rather than mortality rates) for the United States.
 * The plots are interactive. You can hover over the lines to view specific observations, or you can select or de-select individual features above each plot. If you double click a feature, only that feature will become selected.
