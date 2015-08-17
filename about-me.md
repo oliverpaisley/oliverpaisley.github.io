@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About Me
+summary: "My full name is Oliver Joseph di Leonardo Paisley. I'm 24 years old and I live in northern California. I graduated in June 2015 with a B.S. in general statistics from the University of California, Davis."
 permalink: /about-me/
 ---
 <div style="text-align: center; padding-top: 15px; padding-bottom: 29.4px;">
@@ -15,7 +16,7 @@ permalink: /about-me/
   <img src="/pics/9.JPG" width="100" height="133">
 </div>
 
-My full name is Oliver Joseph di Leonardo Paisley. I'm 24 years old and I live in northern California. I graduated in June 2015 with a B.S. in general statistics from the University of California, Davis.
+{{ page.sumamry }}
 
 Things I'm interested in:
 

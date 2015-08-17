@@ -1,10 +1,11 @@
 ---
 layout: page
 title: Visuals
+summary: "This is a page for interesting graphs, plots, charts, maps, and any other cool data visualization."
 permalink: /visuals/
 ---
 
-This is a place for interesting graphs, plots, charts, tables, maps, or any other cool data visualization.
+{{ page.summary }}
 
 ### [Cancer: 1999 to 2011](/visuals/cancer/)
 
