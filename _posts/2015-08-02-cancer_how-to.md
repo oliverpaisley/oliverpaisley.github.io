@@ -4,6 +4,7 @@ title:      "Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US"
 date:       2015-08-02
 summary:    "A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared."
 permalink:  /cancer-how-to/
+image: /images/cancer.png
 tags:
   -R
   -dplyr
