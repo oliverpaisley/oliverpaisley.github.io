@@ -14,7 +14,7 @@ permalink: /about-me/
   <img src="/pics/6.JPG" width="100" height="133" alt="Baby face">
   <img src="/pics/7.JPG" width="100" height="133" alt="Emo hair">
   <img src="/pics/8.JPG" width="100" height="133" alt="Finals hair">
-  <img src="/pics/9.JPG" width="100" height="133" alt=The best one">
+  <img src="/pics/9.JPG" width="100" height="133" alt="The best one">
 </div>
 
 {{ page.summary }}
