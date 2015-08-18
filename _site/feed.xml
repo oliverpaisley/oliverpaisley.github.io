@@ -8,9 +8,7 @@
     
       <item>
         <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</title>
-        <description>&lt;p&gt;test&lt;/p&gt;
-
-&lt;ul&gt;
+        <description>&lt;ul&gt;
   &lt;li&gt;This post is an explanation on how I created the graphs &lt;a href=&quot;/visuals/cancer/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;It is assumed that basic knowledge of &lt;a href=&quot;https://www.r-project.org/&quot;&gt;R&lt;/a&gt; is known.&lt;/li&gt;
 &lt;/ul&gt;

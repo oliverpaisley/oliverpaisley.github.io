@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "Oliver Paisley",
   "main": "gulpfile.js",
+  "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +22,7 @@
     "gulp-jekyll": "*",
     "gulp-jshint": "*",
     "gulp-gh-pages": "*",
+    "gulp-rename": "*",
     "gulp-minify-css": "*",
     "gulp-connect": "*",
     "gulp-bower": "*",
@@ -29,9 +31,10 @@
     "express": "*",
     "gulp-sass": "*",
     "gulp-shell": "*",
-    "tiny-lr": "*"
-  },
-  "devDependencies": {
-    "gulp-livereload": "^3.8.0"
+    "tiny-lr": "*",
+    "gulp-minify-html": "*",
+    "gulp-import-css": "*",
+    "gulp-uncss": "*",
+    "gulp-glob": "*"
   }
 }
