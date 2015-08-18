@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html>
-{% include google_analytics.html %}
+
 {% include head.html %}
-<body class="site{% if site.animated %} animated fade-in-down{% endif %}">
+
+{% include google_analytics.html %}
+
+<body class="site">
 
   <script>
     window.fbAsyncInit = function() {
@@ -31,8 +34,6 @@
       </div>
     </div>
   </div>
-
-  {% include footer.html %}
 
   <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
