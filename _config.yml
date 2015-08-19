@@ -29,7 +29,7 @@ paginate:     5
 sass:
   compressed: true
 gems:
-  - jekyll-minifier
+  - octopress-minify-html
 
 exclude:
     - _sass
