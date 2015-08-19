@@ -1,7 +1,6 @@
 .social-icons {
   color: #000000;
   width: 5%;
-  font-size: 19px;
 }
 
 .share-links {
@@ -10,9 +9,13 @@
   padding-bottom: 1em;
 }
 
+a.fa.fa-twitter {
+  font-size: 19px;
+}
 
 .share-links a.fa {
   border: none;
+  font-size: 19px;
   padding-left: 0.3em;
   padding-right: 0.3em;
 }
