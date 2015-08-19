@@ -2,6 +2,7 @@
 
 header {
   line-height: $heading-line-height;
+  font-family: $heading-font-family;
 }
 
 body {
@@ -11,7 +12,9 @@ body {
 }
 
 h1,
-h2,
+h2 {
+  font-family: $font-family;
+}
 h3,
 h4,
 h5,
