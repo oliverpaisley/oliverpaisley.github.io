@@ -30,6 +30,7 @@ sass:
   compressed: true
 gems:
   - jekyll-sitemap
+  - octopress-minify-html
 
 exclude:
     - _sass
