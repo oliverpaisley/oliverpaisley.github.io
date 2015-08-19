@@ -28,7 +28,8 @@ permalink:    pretty
 paginate:     5
 sass:
   compressed: true
-gems: [jekyll-sitemap, jekyll-press]
+gems:
+  - jekyll-minifier
 
 exclude:
     - _sass

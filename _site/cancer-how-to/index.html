@@ -1,167 +1,376 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US – Observable Data</title><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared."><meta name="author" content="Oliver Paisley"><meta name="keywords" content=""><link rel="canonical" href="http://observabledata.com/cancer-how-to/"><link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml"/><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US"><meta property="og:description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared."><meta property="og:url" content="http://observabledata.com/cancer-how-to/"><meta property="og:site_name" content="Observable Data"><meta property="fb:app_id" content="904518042946899"><meta property="og:image" content="http://observabledata.com/images/cancer.png"><meta name="twitter:image:src" content="http://observabledata.com/images/cancer.png"><meta name="twitter:card" content="summary"/><meta name="twitter:creator" content="@oliverjdpaisley"/><meta name="twitter:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US"/><meta name="twitter:description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared."/><meta name="twitter:url" content="http://observabledata.com/cancer-how-to/"/><meta name="twitter:site" content="@oliverjdpaisley"/><link rel="icon" type="image/png" href="/favicon-16x16.png"><script>!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=n,s.parentNode.insertBefore(o,s)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","UA-65908947-1","auto"),ga("send","pageview")</script></head><body class="site"><script>window.fbAsyncInit=function(){FB.init({appId:"904518042946899",xfbml:!0,version:"v2.4"})},function(e,n,t){var o,c=e.getElementsByTagName(n)[0];e.getElementById(t)||(o=e.createElement(n),o.id=t,o.src="//connect.facebook.net/en_US/sdk.js",c.parentNode.insertBefore(o,c))}(document,"script","facebook-jssdk")</script><div class="site-wrap"> <header class="site-header px2 px-responsive"><div class="mt2 wrap"><div class="measure"> <a href="http://observabledata.com" class="site-title">Observable Data</a><div class="site-nav"><div class="visuals"><a href="/visuals/">Visuals</a></div><div class="about"><a href="/about/">About</a></div></div><div class="clearfix"></div></div></div></header><div class="post p2 p-responsive wrap" role="main"><div class="measure"> <article class="post-content"><h2>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</h2><ul><li>This post is an explanation on how I created the graphs <a href="/visuals/cancer/">here</a>.</li><li>It is assumed that basic knowledge of <a href="https://www.r-project.org/">R</a> is known.</li></ul><p>Our goal is to create an interactive graph of cancer rates in the United States.</p><p>There are 12 years worth of data available from the Centers of Disease Control and Prevention, and it can be obtained <a href="http://www.cdc.gov/cancer/npcr/uscs/download_data.htm">here</a>. The data is broken up into multiple files, depending on the variables of interest. We will be using the file <code>BYSITE.txt</code> to compare sites (types of cancer), and the file <code>BYAGE.txt</code> to compare age groups.</p><p>After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using <a href="https://github.com/hadley/dplyr">dplyr</a> to process the data, <a href="http://rcharts.io/">rCharts</a> to create the graphs, and <a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a> for pretty colors.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US &#8211; Observable Data</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared.">
+  <meta name="author" content="Oliver Paisley">
+  <meta name="keywords" content="">
+  <link rel="canonical" href="http://observabledata.com/cancer-how-to/">
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed for Observable Data" href="/feed.xml" />
+
+  <!-- Custom CSS -->
+
+  <!-- Fonts -->
+
+  <!-- Open Graph -->
+  <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US">
+  <meta property="og:description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared.">
+  <meta property="og:url" content="http://observabledata.com/cancer-how-to/">
+  <meta property="og:site_name" content="Observable Data">
+  <meta property="fb:app_id" content="904518042946899">
+  
+    <meta property="og:image" content="http://observabledata.com/images/cancer.png">
+  
+
+  <!-- Twitter Card -->
+  
+    <meta name="twitter:image:src" content="http://observabledata.com/images/cancer.png">
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:creator" content="@oliverjdpaisley" />
+  <meta name="twitter:title" content="Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US" />
+  <meta name="twitter:description" content="A breakdown of where to find the data, how to transform it into an applicable format, and how to create and customize interactive visualizations that can be easily shared." />
+  <meta name="twitter:url" content="http://observabledata.com/cancer-how-to/" />
+  <meta name="twitter:site" content="@oliverjdpaisley" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="/favicon-16x16.png">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65908947-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+
+<body class="site">
+
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '904518042946899',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://observabledata.com" class="site-title">Observable Data</a>
+
+      <div class="site-nav">
+        <div class="visuals"><a href="/visuals/">Visuals</a></div>
+        <div class="about"><a href="/about/">About</a></div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        <article class="post-content">
+  <h2>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</h2>
+  <ul>
+  <li>This post is an explanation on how I created the graphs <a href="/visuals/cancer/">here</a>.</li>
+  <li>It is assumed that basic knowledge of <a href="https://www.r-project.org/">R</a> is known.</li>
+</ul>
+
+<p>Our goal is to create an interactive graph of cancer rates in the United States.</p>
+
+<p>There are 12 years worth of data available from the Centers of Disease Control and Prevention, and it can be obtained <a href="http://www.cdc.gov/cancer/npcr/uscs/download_data.htm">here</a>. The data is broken up into multiple files, depending on the variables of interest. We will be using the file <code>BYSITE.txt</code> to compare sites (types of cancer), and the file <code>BYAGE.txt</code> to compare age groups.</p>
+
+<p>After downloading the data, we need to load it into R. We also need to load the packages we will be using. We will be using <a href="https://github.com/hadley/dplyr">dplyr</a> to process the data, <a href="http://rcharts.io/">rCharts</a> to create the graphs, and <a href="https://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a> for pretty colors.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>
 <span class="lineno"> 2</span> <span class="kn">library</span><span class="p">(</span>rCharts<span class="p">)</span>
 <span class="lineno"> 3</span> <span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">)</span>
-<span class="lineno"> 4</span>
-<span class="lineno"> 5</span> site_data <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">"BYSITE.TXT"</span><span class="p">,</span>
-<span class="lineno"> 6</span>                         sep              <span class="o">=</span> <span class="s">'|'</span><span class="p">,</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> site_data <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYSITE.TXT&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>                         sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
 <span class="lineno"> 7</span>                         header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
 <span class="lineno"> 8</span>                         stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="lineno"> 9</span>
-<span class="lineno">10</span> age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">"BYAGE.TXT"</span><span class="p">,</span>
-<span class="lineno">11</span>                         sep              <span class="o">=</span> <span class="s">'|'</span><span class="p">,</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> age_data  <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="s">&quot;BYAGE.TXT&quot;</span><span class="p">,</span>
+<span class="lineno">11</span>                         sep              <span class="o">=</span> <span class="s">&#39;|&#39;</span><span class="p">,</span>
 <span class="lineno">12</span>                         header           <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
 <span class="lineno">13</span>                         stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="lineno">14</span>
+<span class="lineno">14</span> 
 <span class="lineno">15</span> <span class="kp">names</span><span class="p">(</span>age_data<span class="p">)</span>  <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>age_data<span class="p">))</span>
-<span class="lineno">16</span> <span class="kp">names</span><span class="p">(</span>site_data<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>site_data<span class="p">))</span></code></pre></div><p>We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize <a href="http://d3js.org/">D3.js</a>. The JavaScript library we will be connecting to is <a href="http://nvd3.org/">NVD3</a>.</p><p>Our first task is to create a graph where the x-axis is time (1999 to 2011), the y-axis is rate of cancer, and different colored lines represent different types of cancer. Therefore, we want 3 columns: year, cancer rate, and type of cancer. The number of rows will be equal to the number of combinations between year and type of cancer.</p><p>Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Change year to 2011 to see how they compare.</span>
+<span class="lineno">16</span> <span class="kp">names</span><span class="p">(</span>site_data<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">tolower</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>site_data<span class="p">))</span></code></pre></div>
+
+<p>We now need to transform the data into a format acceptable for rCharts. rCharts connects to JavaScript libraries that utilize <a href="http://d3js.org/">D3.js</a>. The JavaScript library we will be connecting to is <a href="http://nvd3.org/">NVD3</a>.</p>
+
+<p>Our first task is to create a graph where the x-axis is time (1999 to 2011), the y-axis is rate of cancer, and different colored lines represent different types of cancer. Therefore, we want 3 columns: year, cancer rate, and type of cancer. The number of rows will be equal to the number of combinations between year and type of cancer.</p>
+
+<p>Since there are so many types of cancer, we will subset our data to include only the types that are most prevalent (highest rate). It is easy to see that the top 5 cancer types were the same for both 1999 and 2011.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Change year to 2011 to see how they compare.</span>
 <span class="lineno"> 2</span> site_data <span class="o">%&gt;%</span>
-<span class="lineno"> 3</span>   filter<span class="p">(</span>year       <span class="o">==</span> <span class="s">"1999"</span><span class="p">,</span>
-<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">"Male and Female"</span><span class="p">,</span>
-<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">"All Races"</span><span class="p">,</span>
-<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">"Incidence"</span><span class="p">,</span>
-<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">"~"</span><span class="p">,</span>
-<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">"-"</span><span class="p">,</span>
-<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">"."</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno"> 3</span>   filter<span class="p">(</span>year       <span class="o">==</span> <span class="s">&quot;1999&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">10</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">11</span>   arrange<span class="p">(</span>rate<span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">12</span>   select<span class="p">(</span>year<span class="p">,</span>
 <span class="lineno">13</span>          site<span class="p">)</span> <span class="o">%&gt;%</span>
-<span class="lineno">14</span>   <span class="kp">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span></code></pre></div><p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> sites <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">"Respiratory System"</span><span class="p">,</span>
-<span class="lineno"> 2</span>            <span class="s">"Digestive System"</span><span class="p">,</span>
-<span class="lineno"> 3</span>            <span class="s">"Prostate"</span><span class="p">,</span>
-<span class="lineno"> 4</span>            <span class="s">"Female Breast"</span><span class="p">,</span>
-<span class="lineno"> 5</span>            <span class="s">"Male Genital System"</span><span class="p">,</span>
-<span class="lineno"> 6</span>            <span class="s">"All Cancer Sites Combined"</span><span class="p">)</span>
-<span class="lineno"> 7</span>
+<span class="lineno">14</span>   <span class="kp">tail</span><span class="p">(</span><span class="m">7</span><span class="p">)</span></code></pre></div>
+
+<p>Now we will subset our data based on those 5 cancer types, and also prepare our data for rCharts. We will include “All Cancer Sites Combined” for comparison purposes.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> sites <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Respiratory System&quot;</span><span class="p">,</span>
+<span class="lineno"> 2</span>            <span class="s">&quot;Digestive System&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>            <span class="s">&quot;Prostate&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>            <span class="s">&quot;Female Breast&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>            <span class="s">&quot;Male Genital System&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>            <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">)</span>
+<span class="lineno"> 7</span> 
 <span class="lineno"> 8</span> c1 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
 <span class="lineno"> 9</span>  filter<span class="p">(</span>site       <span class="o">%in%</span> sites
-<span class="lineno">10</span>         year       <span class="o">!=</span> <span class="s">"2007-2011"</span><span class="p">,</span>
-<span class="lineno">11</span>         sex        <span class="o">==</span> <span class="s">"Male and Female"</span><span class="p">,</span>
-<span class="lineno">12</span>         race       <span class="o">==</span> <span class="s">"All Races"</span><span class="p">,</span>
-<span class="lineno">13</span>         event_type <span class="o">==</span> <span class="s">"Incidence"</span><span class="p">,</span>
-<span class="lineno">14</span>         count      <span class="o">!=</span> <span class="s">"~"</span><span class="p">,</span>
-<span class="lineno">15</span>         count      <span class="o">!=</span> <span class="s">"-"</span><span class="p">,</span>
-<span class="lineno">16</span>         count      <span class="o">!=</span> <span class="s">"."</span><span class="p">,)</span> <span class="o">%&gt;%</span>
+<span class="lineno">10</span>         year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno">11</span>         sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno">12</span>         race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno">13</span>         event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno">14</span>         count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno">15</span>         count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno">16</span>         count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
 <span class="lineno">17</span>  mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">18</span>  select<span class="p">(</span>year<span class="p">,</span>
 <span class="lineno">19</span>         site<span class="p">,</span>
 <span class="lineno">20</span>         rate<span class="p">)</span>
-<span class="lineno">21</span>
+<span class="lineno">21</span> 
 <span class="lineno">22</span> c1<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c1<span class="o">$</span>rate<span class="p">,</span>
-<span class="lineno">23</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div><p>Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s <code>nPlot</code> function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
+<span class="lineno">23</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
+
+<p>Now that our data is in the format we wanted, we can move on to creating the graph. We will first use rChart’s <code>nPlot</code> function to generate an NVD3 object. We will then call specific functions from this object to customize things on our graph.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
 <span class="lineno"> 2</span> n1 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
 <span class="lineno"> 3</span>             data  <span class="o">=</span> c1<span class="p">,</span>
-<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">"site"</span><span class="p">,</span>
-<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">"lineChart"</span><span class="p">)</span>
-<span class="lineno"> 6</span>
+<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">&quot;site&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
+<span class="lineno"> 6</span> 
 <span class="lineno"> 7</span> <span class="c1"># Cleaning up the axes.</span>
 <span class="lineno"> 8</span> n1<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">"Rate (per 100,000)"</span><span class="p">,</span>
+<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
 <span class="lineno">10</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
-<span class="lineno">11</span> n1<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">"Year"</span><span class="p">)</span>
-<span class="lineno">12</span>
+<span class="lineno">11</span> n1<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
+<span class="lineno">12</span> 
 <span class="lineno">13</span> <span class="c1"># Setting up which features are selected by default.</span>
-<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c1<span class="o">$</span>site<span class="p">)</span> <span class="o">==</span> <span class="s">"All Cancer Sites Combined"</span>
+<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c1<span class="o">$</span>site<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span>
 <span class="lineno">15</span> n1<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
-<span class="lineno">16</span>
+<span class="lineno">16</span> 
 <span class="lineno">17</span> <span class="c1"># Changing the color of the lines.</span>
-<span class="lineno">18</span> n1<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">"black"</span><span class="p">,</span>
-<span class="lineno">19</span>                    brewer.pal<span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">"Dark2"</span><span class="p">)))</span>
-<span class="lineno">20</span>
+<span class="lineno">18</span> n1<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;black&quot;</span><span class="p">,</span>
+<span class="lineno">19</span>                    brewer.pal<span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">)))</span>
+<span class="lineno">20</span> 
 <span class="lineno">21</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<span class="lineno">22</span> n1<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">"#! function(key, x, y){</span>
-<span class="lineno">23</span> <span class="s">         return '&lt;h3&gt;' + key + '&lt;/h3&gt;' +</span>
-<span class="lineno">24</span> <span class="s">         '&lt;p&gt;' + y + ' per 100,000 diagnosed in ' + x + '&lt;/p&gt;'</span>
-<span class="lineno">25</span> <span class="s">         } !#"</span><span class="p">)</span></code></pre></div><p>If you are using <a href="https://www.rstudio.com/">RStudio</a>, you can just type <code>n1</code> to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.</p><p>You can also easily embed the graph into an <a href="http://rmarkdown.rstudio.com/">R Markdown</a> document, or publish it for free on <a href="http://rpubs.com/">RPubs</a> or <a href="https://gist.github.com/">Gist</a>.</p><p>Information on how to do these things is available on the <a href="http://rcharts.readthedocs.org/en/latest/intro/share.html">documentation for rCharts</a>.</p><p>Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c2 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
-<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">"All Cancer Sites Combined"</span><span class="p">,</span>
-<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">"2007-2011"</span><span class="p">,</span>
-<span class="lineno"> 4</span>          race       <span class="o">==</span> <span class="s">"All Races"</span><span class="p">,</span>
-<span class="lineno"> 5</span>          event_type <span class="o">==</span> <span class="s">"Incidence"</span><span class="p">,</span>
-<span class="lineno"> 6</span>          count      <span class="o">!=</span> <span class="s">"~"</span><span class="p">,</span>
-<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">"-"</span><span class="p">,</span>
-<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">"."</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="lineno">22</span> n1<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">23</span> <span class="s">         return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">24</span> <span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">25</span> <span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>If you are using <a href="https://www.rstudio.com/">RStudio</a>, you can just type <code>n1</code> to view and interact with the graph. Or, you can save the graph as an html file, which allows you to view and interact with it in a browser. Saving it as an html file also makes it easy to put it on a website.</p>
+
+<p>You can also easily embed the graph into an <a href="http://rmarkdown.rstudio.com/">R Markdown</a> document, or publish it for free on <a href="http://rpubs.com/">RPubs</a> or <a href="https://gist.github.com/">Gist</a>.</p>
+
+<p>Information on how to do these things is available on the <a href="http://rcharts.readthedocs.org/en/latest/intro/share.html">documentation for rCharts</a>.</p>
+
+<p>Creating a graph comparing genders is very similar to what we did above. We first use dplyr to process the data into the format we need.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c2 <span class="o">&lt;-</span> site_data <span class="o">%&gt;%</span>
+<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno"> 9</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">10</span>   select<span class="p">(</span>year<span class="p">,</span>
 <span class="lineno">11</span>          sex<span class="p">,</span>
 <span class="lineno">12</span>          rate<span class="p">)</span>
-<span class="lineno">13</span>
+<span class="lineno">13</span> 
 <span class="lineno">14</span> c2<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c2<span class="o">$</span>rate<span class="p">,</span>
-<span class="lineno">15</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div><p>Now we use rCharts to create and customize our graph.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
+<span class="lineno">15</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span></code></pre></div>
+
+<p>Now we use rCharts to create and customize our graph.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> <span class="c1"># Creating the NVD3 object.</span>
 <span class="lineno"> 2</span> n2 <span class="o">&lt;-</span> nPlot<span class="p">(</span>norm_count <span class="o">~</span> year<span class="p">,</span>
 <span class="lineno"> 3</span>             data  <span class="o">=</span> c2<span class="p">,</span>
-<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">"sex"</span><span class="p">,</span>
-<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">"lineChart"</span><span class="p">)</span>
-<span class="lineno"> 6</span>
+<span class="lineno"> 4</span>             group <span class="o">=</span> <span class="s">&quot;sex&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>             type  <span class="o">=</span> <span class="s">&quot;lineChart&quot;</span><span class="p">)</span>
+<span class="lineno"> 6</span> 
 <span class="lineno"> 7</span> <span class="c1"># Cleaning up the axes.</span>
 <span class="lineno"> 8</span> n2<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">"Rate (per 100,000)"</span><span class="p">,</span>
+<span class="lineno"> 9</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
 <span class="lineno">10</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">)</span>
-<span class="lineno">11</span> n2<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">"Year"</span><span class="p">)</span>
-<span class="lineno">12</span>
+<span class="lineno">11</span> n2<span class="o">$</span>xAxis<span class="p">(</span>axisLabel <span class="o">=</span> <span class="s">&quot;Year&quot;</span><span class="p">)</span>
+<span class="lineno">12</span> 
 <span class="lineno">13</span> <span class="c1"># Setting up which features are selected by default.</span>
-<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c2<span class="o">$</span>sex<span class="p">)</span> <span class="o">==</span> <span class="s">"Male and Female"</span>
+<span class="lineno">14</span> disable_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c2<span class="o">$</span>sex<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span>
 <span class="lineno">15</span> n2<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> disable_these<span class="p">)</span>
-<span class="lineno">16</span>
+<span class="lineno">16</span> 
 <span class="lineno">17</span> <span class="c1"># Changing the color of the lines.</span>
-<span class="lineno">18</span> n2<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">"hotpink"</span><span class="p">,</span>
-<span class="lineno">19</span>                    <span class="s">"blue"</span><span class="p">,</span>
-<span class="lineno">20</span>                    <span class="s">"black"</span><span class="p">))</span>
-<span class="lineno">21</span>
+<span class="lineno">18</span> n2<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;hotpink&quot;</span><span class="p">,</span>
+<span class="lineno">19</span>                    <span class="s">&quot;blue&quot;</span><span class="p">,</span>
+<span class="lineno">20</span>                    <span class="s">&quot;black&quot;</span><span class="p">))</span>
+<span class="lineno">21</span> 
 <span class="lineno">22</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<span class="lineno">23</span> n2<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">"#! function(key, x, y){</span>
-<span class="lineno">24</span> <span class="s">        return '&lt;h3&gt;' + key + '&lt;/h3&gt;' +</span>
-<span class="lineno">25</span> <span class="s">              '&lt;p&gt;' + y + ' per 100,000 diagnosed in ' + x + '&lt;/p&gt;'</span>
-<span class="lineno">26</span> <span class="s">              } !#"</span><span class="p">)</span></code></pre></div><p>Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno">1</span> age_data<span class="o">$</span>age <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>age_data<span class="o">$</span>age<span class="p">,</span>
-<span class="lineno">2</span>                        levels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">"&lt;1"</span><span class="p">,</span> <span class="s">"1-4"</span><span class="p">,</span> <span class="s">"5-9"</span><span class="p">,</span> <span class="s">"10-14"</span><span class="p">,</span> <span class="s">"15-19"</span><span class="p">,</span> <span class="s">"20-24"</span><span class="p">,</span>
-<span class="lineno">3</span>                                   <span class="s">"25-29"</span><span class="p">,</span> <span class="s">"30-34"</span><span class="p">,</span> <span class="s">"35-39"</span><span class="p">,</span> <span class="s">"40-44"</span><span class="p">,</span> <span class="s">"45-49"</span><span class="p">,</span>
-<span class="lineno">4</span>                                   <span class="s">"50-54"</span><span class="p">,</span> <span class="s">"55-59"</span><span class="p">,</span> <span class="s">"60-64"</span><span class="p">,</span> <span class="s">"65-69"</span><span class="p">,</span> <span class="s">"70-74"</span><span class="p">,</span>
-<span class="lineno">5</span>                                   <span class="s">"75-79"</span><span class="p">,</span> <span class="s">"80-84"</span><span class="p">,</span> <span class="s">"85+"</span><span class="p">),</span>
-<span class="lineno">6</span>                        ordered <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></div><p>Now we can move on to using dplyr and rCharts, and everything comes out as expected.</p><div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c4 <span class="o">&lt;-</span> age_data <span class="o">%&gt;%</span>
-<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">"All Cancer Sites Combined"</span><span class="p">,</span>
-<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">"2007-2011"</span><span class="p">,</span>
-<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">"Male and Female"</span><span class="p">,</span>
-<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">"All Races"</span><span class="p">,</span>
-<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">"Incidence"</span><span class="p">,</span>
-<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">"~"</span><span class="p">,</span>
-<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">"-"</span><span class="p">,</span>
-<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">"."</span><span class="p">,)</span> <span class="o">%&gt;%</span>
+<span class="lineno">23</span> n2<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">24</span> <span class="s">        return &#39;&lt;h3&gt;&#39; + key + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">25</span> <span class="s">              &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + x + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">26</span> <span class="s">              } !#&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>Creating a graph to compare races is almost exactly the same as the above code. Just replace “sex” with “race”. Creating a graph that compares age, though, is a bit more tricky. There are some issues with the way R sorts the age column. We have to force factor levels on the age variable to make sure everything is sorted correctly. This is kind of tedious, but it works.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno">1</span> age_data<span class="o">$</span>age <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>age_data<span class="o">$</span>age<span class="p">,</span>
+<span class="lineno">2</span>                        levels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;&lt;1&quot;</span><span class="p">,</span> <span class="s">&quot;1-4&quot;</span><span class="p">,</span> <span class="s">&quot;5-9&quot;</span><span class="p">,</span> <span class="s">&quot;10-14&quot;</span><span class="p">,</span> <span class="s">&quot;15-19&quot;</span><span class="p">,</span> <span class="s">&quot;20-24&quot;</span><span class="p">,</span>
+<span class="lineno">3</span>                                   <span class="s">&quot;25-29&quot;</span><span class="p">,</span> <span class="s">&quot;30-34&quot;</span><span class="p">,</span> <span class="s">&quot;35-39&quot;</span><span class="p">,</span> <span class="s">&quot;40-44&quot;</span><span class="p">,</span> <span class="s">&quot;45-49&quot;</span><span class="p">,</span>
+<span class="lineno">4</span>                                   <span class="s">&quot;50-54&quot;</span><span class="p">,</span> <span class="s">&quot;55-59&quot;</span><span class="p">,</span> <span class="s">&quot;60-64&quot;</span><span class="p">,</span> <span class="s">&quot;65-69&quot;</span><span class="p">,</span> <span class="s">&quot;70-74&quot;</span><span class="p">,</span>
+<span class="lineno">5</span>                                   <span class="s">&quot;75-79&quot;</span><span class="p">,</span> <span class="s">&quot;80-84&quot;</span><span class="p">,</span> <span class="s">&quot;85+&quot;</span><span class="p">),</span>
+<span class="lineno">6</span>                        ordered <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
+
+<p>Now we can move on to using dplyr and rCharts, and everything comes out as expected.</p>
+
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="lineno"> 1</span> c4 <span class="o">&lt;-</span> age_data <span class="o">%&gt;%</span>
+<span class="lineno"> 2</span>   filter<span class="p">(</span>site       <span class="o">==</span> <span class="s">&quot;All Cancer Sites Combined&quot;</span><span class="p">,</span>
+<span class="lineno"> 3</span>          year       <span class="o">!=</span> <span class="s">&quot;2007-2011&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>          sex        <span class="o">==</span> <span class="s">&quot;Male and Female&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>          race       <span class="o">==</span> <span class="s">&quot;All Races&quot;</span><span class="p">,</span>
+<span class="lineno"> 6</span>          event_type <span class="o">==</span> <span class="s">&quot;Incidence&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>          count      <span class="o">!=</span> <span class="s">&quot;~&quot;</span><span class="p">,</span>
+<span class="lineno"> 8</span>          count      <span class="o">!=</span> <span class="s">&quot;-&quot;</span><span class="p">,</span>
+<span class="lineno"> 9</span>          count      <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">,)</span> <span class="o">%&gt;%</span>
 <span class="lineno">10</span>   mutate<span class="p">(</span>rate <span class="o">=</span> <span class="p">(</span><span class="kp">as.integer</span><span class="p">(</span>count<span class="p">)</span> <span class="o">/</span> <span class="kp">as.integer</span><span class="p">(</span>population<span class="p">))</span> <span class="o">*</span> <span class="m">1e5</span><span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">11</span>   select<span class="p">(</span>year<span class="p">,</span>
 <span class="lineno">12</span>          age<span class="p">,</span>
 <span class="lineno">13</span>          rate<span class="p">)</span> <span class="o">%&gt;%</span>
 <span class="lineno">14</span>   arrange<span class="p">(</span>year<span class="p">,</span>
 <span class="lineno">15</span>           age<span class="p">)</span>
-<span class="lineno">16</span>
+<span class="lineno">16</span> 
 <span class="lineno">17</span> c4<span class="o">$</span>rate <span class="o">&lt;-</span> <span class="kp">round</span><span class="p">(</span>c4<span class="o">$</span>rate<span class="p">,</span>
 <span class="lineno">18</span>                  digits <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
-<span class="lineno">19</span>
+<span class="lineno">19</span> 
 <span class="lineno">20</span> <span class="c1"># Creating the NVD3 object.</span>
 <span class="lineno">21</span> n4 <span class="o">&lt;-</span> nPlot<span class="p">(</span>rate <span class="o">~</span> age<span class="p">,</span>
 <span class="lineno">22</span>             data  <span class="o">=</span> c4<span class="p">,</span>
-<span class="lineno">23</span>             group <span class="o">=</span> <span class="s">"year"</span><span class="p">,</span>
-<span class="lineno">24</span>             type  <span class="o">=</span> <span class="s">"multiBarChart"</span><span class="p">)</span>
-<span class="lineno">25</span>
+<span class="lineno">23</span>             group <span class="o">=</span> <span class="s">&quot;year&quot;</span><span class="p">,</span>
+<span class="lineno">24</span>             type  <span class="o">=</span> <span class="s">&quot;multiBarChart&quot;</span><span class="p">)</span>
+<span class="lineno">25</span> 
 <span class="lineno">26</span> <span class="c1"># Cleaning up the axes.</span>
 <span class="lineno">27</span> n4<span class="o">$</span>yAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<span class="lineno">28</span>          axisLabel  <span class="o">=</span> <span class="s">"Rate (per 100,000)"</span><span class="p">,</span>
+<span class="lineno">28</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Rate (per 100,000)&quot;</span><span class="p">,</span>
 <span class="lineno">29</span>          width      <span class="o">=</span> <span class="m">47</span><span class="p">,</span>
-<span class="lineno">30</span>          tickFormat <span class="o">=</span> <span class="s">"#! function(d) {return d} !#"</span><span class="p">)</span>
+<span class="lineno">30</span>          tickFormat <span class="o">=</span> <span class="s">&quot;#! function(d) {return d} !#&quot;</span><span class="p">)</span>
 <span class="lineno">31</span> n4<span class="o">$</span>xAxis<span class="p">(</span>showMaxMin <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span>
-<span class="lineno">32</span>          axisLabel  <span class="o">=</span> <span class="s">"Age"</span><span class="p">)</span>
-<span class="lineno">33</span>
+<span class="lineno">32</span>          axisLabel  <span class="o">=</span> <span class="s">&quot;Age&quot;</span><span class="p">)</span>
+<span class="lineno">33</span> 
 <span class="lineno">34</span> <span class="c1"># Setting up which features are selected by default.</span>
-<span class="lineno">35</span> keep_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c4<span class="o">$</span>year<span class="p">)</span> <span class="o">==</span> <span class="s">"2011"</span>
+<span class="lineno">35</span> keep_these <span class="o">&lt;-</span> <span class="kp">unique</span><span class="p">(</span>c4<span class="o">$</span>year<span class="p">)</span> <span class="o">==</span> <span class="s">&quot;2011&quot;</span>
 <span class="lineno">36</span> n4<span class="o">$</span>set<span class="p">(</span>disabled <span class="o">=</span> <span class="o">!</span>keep_these<span class="p">)</span>
-<span class="lineno">37</span>
+<span class="lineno">37</span> 
 <span class="lineno">38</span> <span class="c1"># Changing the color of the lines.</span>
-<span class="lineno">39</span> n4<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> colorRampPalette<span class="p">(</span>brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">"Dark2"</span><span class="p">))(</span><span class="m">13</span><span class="p">))</span>
-<span class="lineno">40</span>
+<span class="lineno">39</span> n4<span class="o">$</span>chart<span class="p">(</span>color <span class="o">=</span> colorRampPalette<span class="p">(</span>brewer.pal<span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="s">&quot;Dark2&quot;</span><span class="p">))(</span><span class="m">13</span><span class="p">))</span>
+<span class="lineno">40</span> 
 <span class="lineno">41</span> <span class="c1"># Customizing the tooltip when you hover over an observation.</span>
-<span class="lineno">42</span> n4<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">"#! function(key, x, y){</span>
-<span class="lineno">43</span> <span class="s">        return '&lt;h3&gt;' + x + '&lt;/h3&gt;' +</span>
-<span class="lineno">44</span> <span class="s">         '&lt;p&gt;' + y + ' per 100,000 diagnosed in ' + key + '&lt;/p&gt;'</span>
-<span class="lineno">45</span> <span class="s">         } !#"</span><span class="p">)</span></code></pre></div><p>I would like to end this post by thanking <a href="http://ramnathv.github.io/">Ramnath Vaidyanathan</a> for all the work he has put into rCharts.</p></article><div class="share-links">Share this post: <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US&amp;url=http://observabledata.com/cancer-how-to/" rel="nofollow" target="_blank" title="Share on Twitter"></a> <a class="fa fa-facebook" href="https://facebook.com/sharer.php?u=http://observabledata.com/cancer-how-to/" rel="nofollow" target="_blank" title="Share on Facebook"></a> <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://observabledata.com/cancer-how-to/&amp;title=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US" rel="nofollow" target="_blank" title="Share on Reddit"></a> <a class="fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://observabledata.com/cancer-how-to/&amp;t=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US" rel="nofollow" target="_blank" title="Share on Hacker News"></a></div>Like this post: < div class="fb-like" data-href="" data-layout="button" data-height:"16 px"
- data-action="like" data-show-faces="true"></div><div id="disqus_thread"></div> <script>var disqus_shortname="observabledata",disqus_identifier="/cancer_how-to",disqus_title="";!function(){var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="//"+disqus_shortname+".disqus.com/embed.js",(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div></body><link href='http://fonts.googleapis.com/css?family=Roboto&text=Observable+Data+Visuals+About' rel='stylesheet' type='text/css'><link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'><link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"><style type="text/css">
+<span class="lineno">42</span> n4<span class="o">$</span>chart<span class="p">(</span>tooltipContent <span class="o">=</span> <span class="s">&quot;#! function(key, x, y){</span>
+<span class="lineno">43</span> <span class="s">        return &#39;&lt;h3&gt;&#39; + x + &#39;&lt;/h3&gt;&#39; +</span>
+<span class="lineno">44</span> <span class="s">         &#39;&lt;p&gt;&#39; + y + &#39; per 100,000 diagnosed in &#39; + key + &#39;&lt;/p&gt;&#39;</span>
+<span class="lineno">45</span> <span class="s">         } !#&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>I would like to end this post by thanking <a href="http://ramnathv.github.io/">Ramnath Vaidyanathan</a> for all the work he has put into rCharts.</p>
+
+</article>
+
+<div class="share-links">
+
+  Share this post:
+  <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US&amp;url=http://observabledata.com/cancer-how-to/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+  <a class="fa fa-facebook" href="https://facebook.com/sharer.php?u=http://observabledata.com/cancer-how-to/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+  <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://observabledata.com/cancer-how-to/&amp;title=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+  <a class="fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://observabledata.com/cancer-how-to/&amp;t=Using%20R,%20rCharts,%20and%20NVD3%20to%20Visualize%20Cancer%20Rates%20in%20the%20US" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+</div>
+
+
+Like this post:
+<div
+  class="fb-like"
+  data-href=""
+  data-layout="button"
+  data-height: "16px"
+  data-action="like"
+  data-show-faces="true">
+</div>
+
+
+
+  
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_shortname  = 'observabledata';
+  var disqus_identifier = '/cancer_how-to';
+  var disqus_title      = '';
+
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<link href='http://fonts.googleapis.com/css?family=Roboto&text=Observable+Data+Visuals+About' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<style type="text/css">
   
   @charset "UTF-8";
 /*!
@@ -1439,4 +1648,7 @@ blockquote footer {
 .pagination a:active {
   border-bottom: none; }
 
-</style></html>
+</style>
+
+
+</html>
