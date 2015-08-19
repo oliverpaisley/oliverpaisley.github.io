@@ -28,8 +28,6 @@ permalink:    pretty
 paginate:     5
 sass:
   compressed: true
-gems:
-  - octopress-minify-html
 
 exclude:
     - _sass
