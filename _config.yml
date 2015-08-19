@@ -28,9 +28,7 @@ permalink:    pretty
 paginate:     5
 sass:
   compressed: true
-gems:
-  - octopress-minify-html
-  - jekyll-sitemap
+gems: [jekyll-sitemap, jekyll-press]
 
 exclude:
     - _sass
