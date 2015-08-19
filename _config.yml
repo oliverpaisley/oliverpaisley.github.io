@@ -29,8 +29,8 @@ paginate:     5
 sass:
   compressed: true
 gems:
-  - jekyll-sitemap
   - octopress-minify-html
+  - jekyll-sitemap
 
 exclude:
     - _sass
