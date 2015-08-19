@@ -9,7 +9,6 @@ url:         "http://observabledata.com"
 # Optional features
 show_related_posts: false
 show_post_footers:  true
-show_social_icons:  true
 
 # Disqus post comments
 disqus_shortname: "observabledata"
