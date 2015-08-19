@@ -34,6 +34,9 @@ compress_html:
   endings: all
   comments: all
 
+gems:
+  - jekyll-press
+
 exclude:
     - _sass
     - node_modules
