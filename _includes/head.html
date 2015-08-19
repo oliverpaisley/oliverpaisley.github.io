@@ -14,16 +14,7 @@
   <link rel="stylesheet" href="{{ "/css/pixyll.css" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}" type="text/css">
 
   <!-- Fonts -->
-
-  <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-<script>
-  WebFont.load({
-    google: {
-      families: ['Roboto Slab', 'Lato:900,300']
-    }
-  });
-</script>
-
+  {% include gogle_fonts.html %}
   {% if site.show_social_icons or site.show_sharing_icons %}
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   {% endif %}
@@ -54,6 +45,8 @@
 
   <!-- Icons -->
   <link rel="icon" type="image/png" href="/favicon-16x16.png">
+
+  {% include scssify.html %}
 
   {% include google_analytics.html %}
 
