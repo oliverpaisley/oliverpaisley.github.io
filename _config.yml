@@ -20,7 +20,7 @@ twitter_username: oliverjdpaisley
 
 
 # Build settings
-highlighter: pygments
+highlighter: rouge
 markdown:     kramdown
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
@@ -31,3 +31,5 @@ sass:
 
 exclude:
     - _sass
+
+plugins: [jekyll-paginate]
