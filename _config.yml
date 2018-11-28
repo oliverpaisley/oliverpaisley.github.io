@@ -1,10 +1,10 @@
 # Site settings
-title:       Oliver Joseph di Leonardo Paisley
-email:       oliver@ojdp19.com
+title:       Oliver Paisley
+email:       oliver@oliverpaisley.com
 author:      "Oliver Paisley"
-description: "A person website for Oliver"
+description: "A personal website for Oliver"
 baseurl:     ""
-url:         "http://ojdp19.com"
+url:         "http://oliverpaisley.com"
 
 # Optional features
 show_related_posts: false
