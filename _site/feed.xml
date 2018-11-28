@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Observable Data</title>
-    <description>A blog about R, data science, and cool visualizations.</description>
-    <link>http://ojdp19.com/</link>
-    <atom:link href="http://ojdp19.com/feed.xml" rel="self" type="application/rss+xml" />
+    <title>Oliver Paisley</title>
+    <description>A personal website for Oliver</description>
+    <link>http://oliverpaisley.com/</link>
+    <atom:link href="http://oliverpaisley.com/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>Using R, rCharts, and NVD3 to Visualize Cancer Rates in the US</title>
@@ -394,8 +394,8 @@
 &lt;p&gt;I would like to end this post by thanking &lt;a href=&quot;http://ramnathv.github.io/&quot;&gt;Ramnath Vaidyanathan&lt;/a&gt; for all the work he has put into rCharts.&lt;/p&gt;
 </description>
         <pubDate>Sun, 02 Aug 2015 00:00:00 -0700</pubDate>
-        <link>http://ojdp19.com/cancer-how-to/</link>
-        <guid isPermaLink="true">http://ojdp19.com/cancer-how-to/</guid>
+        <link>http://oliverpaisley.com/cancer-how-to/</link>
+        <guid isPermaLink="true">http://oliverpaisley.com/cancer-how-to/</guid>
       </item>
     
   </channel>
