@@ -1,7 +1,7 @@
 ---
 layout: page
-title: About Observable Data
-summary: "Observable Data is a blog about R, data visualizations, and data science."
+title: About
+summary: "This is a static website for Oliver Paisley."
 permalink: /about/
 ---
 
